@@ -7,10 +7,14 @@ export default new Vuex.Store({
   state: {
     panelShow: true,
     curPage: 'add',
+    modalData: null,
   },
   mutations: {
     switchPage(state, page) {
       state.curPage = page;
+    },
+    triggerModal(state, data) {
+      state.modalData = data;
     },
   },
 });

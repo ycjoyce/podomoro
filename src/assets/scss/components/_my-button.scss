@@ -1,0 +1,74 @@
+.my-button{
+  padding: 17px 0;
+  border-radius: 30px;
+  font-size: 14px;
+  letter-spacing: 1.4px;
+  line-height: 17px;
+  font-weight: 900;
+  color: #fff;
+
+  &.primary {
+    @include initial-button($red);
+  }
+
+  &.secondary {
+    @include initial-button($gray-medium-darker);
+  }
+
+  &.border {
+    background-color: transparent;
+
+    &.primary {
+      border: 2px solid $red;
+      color: $red;
+    }
+
+    &.secondary {
+      border: 2px solid $gray-medium-darker;
+      color: $gray-medium-darker;
+    }
+  }
+
+  &.pos-modal {
+    flex: 1 1 auto;
+    padding: 17px 50px;
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+    @include rwd(mobile) {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+
+    &.secondary {
+      color: $white;
+    }
+  }
+
+  &.pos-add-new-task {
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  &.pos-analytic-panel {
+    flex: 0 0 auto;
+    padding: 12px 30px;
+  }
+
+  &.pos-tag-list {
+    padding: 12px 15px;
+    font-weight: 900;
+    color: $white;
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+
+    &.secondary {
+      background-color: $gray-medium-darker;
+    }
+
+    &.primary {
+      flex: 1 0 auto;
+    }
+  }
+}

@@ -3,7 +3,10 @@
     id="app"
     :style="{ height: windowHeight + 'px' }"
   >
-    <Modal/>
+    <Modal
+      :data="$store.state.modalData"
+      v-if="$store.state.modalData"
+    />
     <MainArea/>
     <AsideArea/>
   </div>

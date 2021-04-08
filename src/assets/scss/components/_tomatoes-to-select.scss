@@ -1,0 +1,27 @@
+.tomato {
+  &-container {
+    display: flex;
+    justify-content: space-between;
+    
+    &.pos-tag-list {
+      margin-bottom: 20px;
+
+      .tomato-to-select {
+        background-size: 10px;
+      }
+    }
+  }
+
+  &-btn {
+    width: 25px;
+    height: 25px;
+    flex: 1 1 25px;
+    @include initial-button(transparent);
+    @include set-background-image(contain);
+    background-image: url('~@/assets/img/tomato_small_gray.svg');
+    
+    &.selected {
+      background-image: url('~@/assets/img/tomato_small_color.svg');
+    }
+  }
+}
