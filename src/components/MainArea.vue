@@ -22,12 +22,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-	.main-area {
-		background-color: $gray-light;
-		height: 100%;
-		flex: 1 1 50%;
-		overflow-y: scroll;
-	}
-</style>

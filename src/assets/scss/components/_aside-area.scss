@@ -1,0 +1,20 @@
+.aside-area {
+  flex-shrink: 1;
+  height: 100%;
+  display: flex;
+  background-color: $black;
+
+  @include rwd(mobile) {
+    flex-direction: column-reverse;
+  }
+}
+
+.aside-panel {
+  width: calc(50vw - 80px);
+  border-left: 2px solid $gray-dark;
+  overflow-y: scroll;
+  @include rwd(mobile) {
+    width: 100vw;
+    flex-grow: 1;
+  }
+}

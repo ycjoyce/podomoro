@@ -16,5 +16,8 @@ export default new Vuex.Store({
     triggerModal(state, data) {
       state.modalData = data;
     },
+    togglePanel(state, type) {
+      state.panelShow = !(type === 'to-close');
+    },
   },
 });

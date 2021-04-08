@@ -18,21 +18,3 @@
     </p>
   </div>
 </template>
-
-<style lang="scss" scoped>
-  .logo{
-    background-image: url('~@/assets/img/tomato_small_color.svg');
-    @include set-background-image(contain);
-
-    &-title{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 24px;
-      letter-spacing: 3.6px;
-      color: #fff;
-      font-weight: 100;
-    }
-  }
-</style>

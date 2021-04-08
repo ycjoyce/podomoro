@@ -38,6 +38,7 @@ export default {
       pages: [
         'add', 'list', 'analysis', 'ringtone'
       ],
+      buttonStatus: 'to-close',
     };
   },
   computed: {
@@ -52,6 +53,14 @@ export default {
     switchPage(page) {
       this.$store.commit('switchPage', page);
     },
+    togglePanel(buttonStatus) {
+      if (buttonStatus !== 'to-close' && buttonStatus !== 'to-open') {
+				return;
+			}
+			const	oppositeStatus =  buttonStatus === 'to-close' ? 'to-open' : 'to-close';
+			this.$store.commit('togglePanel', buttonStatus);
+			this.buttonStatus = oppositeStatus;
+    }
   },
 }
 </script>

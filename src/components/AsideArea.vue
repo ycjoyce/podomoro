@@ -16,16 +16,3 @@ export default {
 	},
 }
 </script>
-
-<style lang="scss" scoped>
-  .aside-area {
-    flex-shrink: 1;
-    height: 100%;
-    display: flex;
-    background-color: $black;
-
-    @include rwd(mobile) {
-      flex-direction: column-reverse;
-    }
-  }
-</style>
