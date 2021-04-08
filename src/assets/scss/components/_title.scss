@@ -1,0 +1,26 @@
+.title {
+  &-primary {
+    color: #fff;
+    width: 100%;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 2px;
+    line-height: 24px;
+    padding-bottom: $pc-gap;
+    margin-bottom: $pc-gap;
+    border-bottom: 1px solid $gray-dark;
+  }
+
+  &-secondary {
+    color: $gray-medium;
+    font-size: 14px;
+    letter-spacing: 0.7px;
+    line-height: 17px;
+
+    &.small {
+      font-size: 12px;
+      letter-spacing: 0.6px;
+      line-height: 15px;
+    }
+  }
+}

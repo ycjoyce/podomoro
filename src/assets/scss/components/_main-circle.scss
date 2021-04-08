@@ -1,0 +1,13 @@
+.main-circle {
+  position: relative;
+  margin: 0 auto;
+  @include main-circle(300px, 50%);
+
+  @include rwd(pad){
+    @include main-circle(300px, 80%);
+  }
+
+  @include rwd(mobile){
+    @include main-circle(300px, 70%);
+  }
+}

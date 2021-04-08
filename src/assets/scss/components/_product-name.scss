@@ -1,0 +1,11 @@
+.product-name {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 100;
+  flex: 0 0 50px;
+  text-align: center;
+
+  @include rwd(mobile){
+    flex: 0 0 20px;
+  }
+}
