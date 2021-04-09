@@ -4,52 +4,53 @@
       ADD NEW TASK
     </h2>
 
-    <TextInput
-      title="TASK TITLE"
-      :modelValue.sync="taskTitle"
+    <EditPanel
       pos="add-new-task"
-    />
-
-    <div id="estimated-tomato">
-      <h3 class="title-secondary">
-        ESTIMATED TOMATO
-      </h3>
-      
-      <TomatoesToSelect
-        :amount="10"
-        :tomatoSelected.sync="tomatoNums"
-      />
-    </div>
-
-    <MyButton
-      title="ADD TASK"
-      type="primary"
-      :method="checkInputData"
-      pos="add-new-task"
-    />
+      :buttons="editPanelButtons"
+      :tomatoAmount="10"
+      @updateTaskTitle="setValue"
+      @updateTomatoNums="setValue"
+    >
+      <template v-slot:buttons>
+        <MyButton
+          title="ADD TASK"
+          type="primary"
+          :method="checkInputData"
+          pos="add-new-task"
+        />
+      </template>
+    </EditPanel>
   </div>
 </template>
 
 <script>
+import EditPanel from './EditPanel';
 import MyButton from './MyButton';
-import TextInput from './TextInput';
-import TomatoesToSelect from './TomatoesToSelect';
 
 import { setStorage } from '../assets/js/util';
 
 export default {
   components: {
+    EditPanel,
     MyButton,
-    TextInput,
-    TomatoesToSelect,
   },
   data() {
     return {
       taskTitle: '',
       tomatoNums: 0,
+      editPanelButtons: [
+        {
+          title: 'ADD TASK',
+          type: 'primary',
+          method: this.checkInputData,
+        }
+      ],
     };
   },
   methods: {
+    setValue({col, val}) {
+      this[col] = val;
+    },
     checkInputData() {
       if (!this.taskTitle) {
         this.$store.commit('triggerModal', {
@@ -103,8 +104,8 @@ export default {
       this.finishAddingTask();
     },
     finishAddingTask() {
-      this.tomatoNums = 0;
-      this.taskTitle = '';
+      this.taskTitle = 0;
+      this.tomatoNums = '';
 
       this.$store.commit('triggerModal', {
         title: 'Success',

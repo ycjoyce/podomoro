@@ -32,8 +32,17 @@ export default {
     getWindowHeight() {
       this.windowHeight = document.documentElement.clientHeight;
     },
+    initExistedTasks() {
+      if (!localStorage.getItem('addTodoTask')) {
+        return;
+      }
+      JSON.parse(localStorage.getItem('addTodoTask')).forEach((task) => {
+        this.$store.commit('addTodoTask', task);
+      });
+    },
   },
   mounted() {
+    this.initExistedTasks();
     this.getWindowHeight();
     window.addEventListener('resize', this.getWindowHeight);
   },

@@ -8,6 +8,7 @@ export default new Vuex.Store({
     panelShow: true,
     curPage: 'add',
     modalData: null,
+    todoTask: [],
   },
   mutations: {
     switchPage(state, page) {
@@ -19,5 +20,8 @@ export default new Vuex.Store({
     togglePanel(state, type) {
       state.panelShow = !(type === 'to-close');
     },
+    addTodoTask(state,task) {
+			state.todoTask.push(task);
+		},
   },
 });

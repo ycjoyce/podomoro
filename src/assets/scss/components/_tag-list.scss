@@ -1,0 +1,241 @@
+.tags {
+  &-list {
+    display: flex;
+  }
+
+  &-item {
+    padding: 5px 20px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    line-height: 15px;
+    font-weight: 900;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    background-color: $gray-medium-darker;
+    color: $gray-medium;
+
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+
+    &.active {
+      color: $white;
+      background-color: $red;
+    }
+  }
+
+  &-panel {
+    background-color: $gray-dark;
+
+    &-empty {
+      font-size: 14px;
+      letter-spacing: 1.4px;
+      line-height: 20px;
+      text-align: center;
+      padding: $pc-gap;
+      color: $white;
+    }
+  }
+}
+
+.content {
+  &-item {
+    padding: 10px 10px 5px 10px;
+    border-bottom: 1px solid $black;
+  }
+
+  &-title {
+    &.active { // 正在進行的todo
+      position:relative;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 13px;
+        height: 13px;
+        @include set-background-image(contain);
+        background-image: url('~@/assets/img/tomato_small_color.svg');
+        position: absolute;
+        left: -30px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &.done { // done列表
+      position: relative;
+
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        @include set-background-image(contain);
+        background-image: url('~@/assets/img/complete.svg');
+        position: absolute;
+        left: -35px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 5px;
+      padding-left: 40px;
+    }
+
+    &-text {
+      font-size: 16px;
+      letter-spacing: 0.8px;
+      line-height: 19px;
+      color: $white;
+      text-align: justify;
+    }
+
+    &-count {
+      &-list {
+        display: flex;
+        margin-top: 5px;
+      }
+      
+      &-item {
+        &:not(:last-child) {
+          margin-right: 6px;
+        }
+      }
+
+      &-circle {
+        border: 1px solid $red;
+        border-radius: 100%;
+        display: block;
+        width: 8px;
+        height: 8px;
+
+        &.completed {
+          background-color: $red;
+        }
+      }
+    }
+
+    &-open-panel {
+      @include initial-button(transparent);
+      @include set-background-image(contain);
+      text-align: center;
+      width: 40px;
+      height: 40px;
+
+      &.to-close {
+        transform: rotate(90deg);
+      }
+
+      .dot{
+        display: inline-block;
+        width: 2px;
+        height: 2px;
+        background-color: $gray-medium;
+        border-radius: 100%;
+        margin-right: 3px;
+        line-height: 40px;
+      }
+    }
+  }
+
+  &-panel {
+    border-top: 1px solid $black;
+    padding-top: 15px;
+    width: calc(100% - 80px);
+    margin: 0 auto;
+    padding-bottom: 15px;
+    @include rwd(pad) {
+      width: calc(100% - 40px);
+    }
+    @include rwd(mobile) {
+      width: calc(100% - 40px);
+    }
+
+    &.hide {
+      display: none;
+    }
+
+    &-tomato {
+      .title-secondary {
+        margin-bottom: 10px;
+      }
+    }
+
+    &-btn-area {
+      margin-top:10px;
+      display: flex;
+    }
+  }
+
+  &-list {
+    &.ringtone {
+      .content {
+        &-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 15px;
+        }
+
+        &-label {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          border: 2px solid $red;
+          border-radius: 100%;
+          vertical-align: middle;
+          margin-right: 10px;
+          cursor: pointer;
+        }
+
+        &-radio {
+          display: none;
+
+          &:checked +label{
+            background: $red;
+          }
+        }
+
+        &-title {
+          &-text {
+            font-size: 16px;
+            letter-spacing: 0.8px;
+            line-height: 19px;
+            color: $white;
+            text-align: justify;
+          }
+        }
+
+        &-audio {
+          display: none;
+        }
+
+        &-btn {
+          &-play {
+            @include initial-button(transparent);
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            border-radius: 100%;
+            border: 2px solid $gray-medium-darker;
+            cursor: pointer;
+            @include set-background-image(contain);
+
+            &.toPlay {
+              background-image: url('~@/assets/img/play_gray.svg');
+            }
+
+            &.toPause {
+              background-image: url('~@/assets/img/pause_gray.svg');
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@
   >
     <h3 
       class="title-secondary"
-      :class="{ small: type === 'small' }"
+      :class="{ small }"
     >
       {{title}}
     </h3>
@@ -25,8 +25,8 @@ export default {
       type: String,
       required: true,
     },
-    type: {
-      type: String,
+    small: {
+      type: Boolean,
       required: false,
     },
     modelValue: {

@@ -1,17 +1,26 @@
 <template>
-  <div
-		class="tomato-container"
-		:data-id="dataId"
-	>
-    <button
-			v-for="n in amount"
-			:key="n"
-			:data-number="n"
-			class="tomato-btn"
-			:class="{ selected: n <= tomatoSelected }"
-			@click="selectTomato(n)"
-    ></button>
-  </div>
+	<div>
+		<h3
+			class="title-secondary"
+			:class="{ small: small }"
+		>
+			ESTIMATED TOMATO
+		</h3>
+
+		<div
+			class="tomato-container"
+			:data-id="dataId"
+		>
+			<button
+				v-for="n in amount"
+				:key="n"
+				:data-number="n"
+				class="tomato-btn"
+				:class="{ selected: n <= tomatoSelected }"
+				@click="selectTomato(n)"
+			></button>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -29,6 +38,14 @@ export default {
 			type: Number,
 			required: true,
 		},
+		small: {
+      type: Boolean,
+      required: false,
+    },
+		pos: {
+      type: String,
+      required: false,
+    },
 	},
 	methods: {
 		selectTomato(number) {
