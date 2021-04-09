@@ -27,8 +27,6 @@
 import EditPanel from './EditPanel';
 import MyButton from './MyButton';
 
-import { setStorage } from '../assets/js/util';
-
 export default {
   components: {
     EditPanel,
@@ -98,8 +96,10 @@ export default {
         progress: [],
       };
 
-      this.$store.commit('addTodoTask', data);
-      setStorage('addTodoTask', data);
+      this.$store.dispatch('operateTodoTask', {
+        type: 'add',
+        data,
+      });
 
       this.finishAddingTask();
     },

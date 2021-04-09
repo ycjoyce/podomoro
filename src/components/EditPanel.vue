@@ -16,13 +16,11 @@
 </template>
 
 <script>
-// import MyButton from './MyButton';
 import TextInput from './TextInput';
 import TomatoesToSelect from './TomatoesToSelect';
 
 export default {
   components: {
-    // MyButton,
     TextInput,
     TomatoesToSelect,
   },
@@ -31,10 +29,6 @@ export default {
       type: String,
       required: false,
     },
-    // buttons: {
-    //   type: Array,
-    //   required: false,
-    // },
     tomatoAmount: {
       type: Number,
       required: true,

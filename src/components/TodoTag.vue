@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li
-      v-for="(item, itemIndex) in data.list"
+      v-for="(item, itemIndex) in taskList"
       :key="itemIndex"
       class="content-item"
     >
@@ -19,12 +19,12 @@
       >
         <template v-slot:buttons>
           <div class="content-panel-btn-area">
-            <!-- <MyButton
+            <MyButton
               title="DELETE"
               type="secondary"
-              :method="toDelete.bind(null, item.id, itemIndex)"
+              :method="deleteTask.bind(null, item.id, itemIndex)"
               pos="tag-list"
-            />
+            /><!-- 
             <MyButton
               title="SAVE"
               type="primary"
@@ -47,11 +47,13 @@
 </template>
 
 <script>
+import MyButton from './MyButton';
 import TodoTagPanelTitle from './TodoTagPanelTitle';
 import EditPanel from './EditPanel';
 
 export default {
   components: {
+    MyButton,
     TodoTagPanelTitle,
     EditPanel,
   }, 
@@ -63,12 +65,20 @@ export default {
   },
   data() {
     return {
+      taskList: this.data.list,
       editPanelOpened: null,
     };
   },
   methods: {
     handleToggleEditPanel(index) {
       this.editPanelOpened = this.editPanelOpened !== index ? index : null;
+    },
+    deleteTask(taskId, index) {
+      this.$store.dispatch('operateTodoTask', {
+        type: 'delete',
+        data: taskId,
+      });
+      this.taskList.splice(index, 1);
     },
   },
 }
