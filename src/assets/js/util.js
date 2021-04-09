@@ -1,9 +1,9 @@
-export function setStorage(column, data) {
+export function setStorage(storage, data) {
   if (!localStorage) {
 		throw new Error("localStorage doesn't exist.");
 	}
 
-  let list = !localStorage[column] ? [] : JSON.parse(localStorage[column]);
+  let list = !localStorage[storage] ? [] : JSON.parse(localStorage[storage]);
 
 	if (!Array.isArray(list)) {
 		list = [];
@@ -11,14 +11,46 @@ export function setStorage(column, data) {
 
 	list = list.concat(data);
 
-	localStorage.setItem(column, JSON.stringify(list));
+	localStorage.setItem(storage, JSON.stringify(list));
 }
 
-export function deleteDataInStorage(column, targetId) {
-	let originalStorage = JSON.parse(localStorage.getItem(column));
+export function deleteDataInStorage(storage, targetId) {
+	let originalStorage = JSON.parse(localStorage.getItem(storage));
 	const targetIndex = originalStorage.findIndex((item) => item.id === targetId);
 
 	originalStorage.splice(targetIndex, 1);
-	localStorage.removeItem(column);
-	setStorage(column, originalStorage);
+	localStorage.removeItem(storage);
+	setStorage(storage, originalStorage);
+}
+
+export function updateStorage({
+	storage, targetId, column, data, whetherClearProgress
+}) {
+	let originalStorage = JSON.parse(localStorage.getItem(storage));
+	const targetIndex = originalStorage.findIndex((item) => item.id === targetId);
+	let newTask = originalStorage[targetIndex];
+
+	if (column === 'progress') {
+		updateProgress();
+	} else {
+		newTask[column] = data;
+	}
+
+	originalStorage.splice(targetIndex, 1, newTask);
+	localStorage.removeItem(storage);
+	setStorage(storage, originalStorage);
+
+	function updateProgress() {
+		if (!whetherClearProgress) {
+			const dateIndex = newTask[column].findIndex((item) => item.date === data.date);
+			if (dateIndex < 0) {
+				originalStorage[targetIndex].progress.push(data);
+			} else {
+				originalStorage[targetIndex].progress[dateIndex].count = data.count;
+			}
+		} else {
+			const len = originalStorage[targetIndex].progress.length;
+			originalStorage[targetIndex].progress.splice(0, len, data);
+		}
+	}
 }

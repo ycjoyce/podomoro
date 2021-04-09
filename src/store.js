@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import {
   setStorage,
   deleteDataInStorage,
+  updateStorage,
 } from './assets/js/util';
 
 Vue.use(Vuex);
@@ -33,6 +34,17 @@ export default new Vuex.Store({
 			));
 			state.todoTask.splice(targetIndex, 1);
     },
+    updateTodoTask(state, data) {
+      const targetTask = state.todoTask.find((task) => (
+				task.id === data.id
+			));
+			const columns = Object.keys(data).filter((key) => (
+				key !== 'id'
+			));
+			columns.forEach((column) => {
+				targetTask[column] = data[column];
+			});
+    },
   },
   actions: {
     operateTodoTask({ commit }, { type, data }) {
@@ -44,6 +56,12 @@ export default new Vuex.Store({
         case 'delete':
           commit('deleteTodoTask', data);
           deleteDataInStorage('addTodoTask', data);
+          break;
+        case 'update':
+          commit('updateTodoTask', data.task);
+          for (let item of data.dataToUpdateStorage) {
+            updateStorage(item);
+          }
           break;
         default:
           break;
