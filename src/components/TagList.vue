@@ -21,7 +21,7 @@
 
       <RingtoneTag
         class="content-list ringtone"
-        v-if="data.type === 'ringtoneList'"
+        v-else-if="data.type === 'ringtoneList'"
       />
 
       <p

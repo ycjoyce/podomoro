@@ -24,7 +24,7 @@ export function deleteDataInStorage(storage, targetId) {
 }
 
 export function updateStorage({
-	storage, targetId, column, data, whetherClearProgress
+	storage = 'addTodoTask', targetId, column, data, whetherClearProgress
 }) {
 	let originalStorage = JSON.parse(localStorage.getItem(storage));
 	const targetIndex = originalStorage.findIndex((item) => item.id === targetId);
@@ -45,12 +45,12 @@ export function updateStorage({
 			const dateIndex = newTask[column].findIndex((item) => item.date === data.date);
 			if (dateIndex < 0) {
 				originalStorage[targetIndex].progress.push(data);
-			} else {
-				originalStorage[targetIndex].progress[dateIndex].count = data.count;
+				return;
 			}
-		} else {
-			const len = originalStorage[targetIndex].progress.length;
-			originalStorage[targetIndex].progress.splice(0, len, data);
+			originalStorage[targetIndex].progress[dateIndex].count = data.count;
+			return;
 		}
+		const len = originalStorage[targetIndex].progress.length;
+		originalStorage[targetIndex].progress.splice(0, len, data);
 	}
 }

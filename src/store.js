@@ -35,15 +35,8 @@ export default new Vuex.Store({
 			state.todoTask.splice(targetIndex, 1);
     },
     updateTodoTask(state, data) {
-      const targetTask = state.todoTask.find((task) => (
-				task.id === data.id
-			));
-			const columns = Object.keys(data).filter((key) => (
-				key !== 'id'
-			));
-			columns.forEach((column) => {
-				targetTask[column] = data[column];
-			});
+      const targetIndex = state.todoTask.findIndex((task) => task.id === data.id);
+      state.todoTask.splice(targetIndex, 1, data);
     },
   },
   actions: {

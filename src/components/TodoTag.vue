@@ -17,6 +17,7 @@
         :tomatoAmount="10"
         @updateTaskTitle="setValue"
         @updateTomatoNums="setValue"
+        :clearValue="whetherClearEditPanel"
         v-show="editPanelOpened === `${data.title}-${itemIndex}`"
       >
         <template v-slot:buttons>
@@ -71,6 +72,7 @@ export default {
       editPanelOpened: null,
       taskTitle: Array.from({ length: this.data.list.length }, () => ''),
       tomatoNums: Array.from({ length: this.data.list.length }, () => 0),
+      whetherClearEditPanel: null,
     };
   },
   computed: {
@@ -90,8 +92,10 @@ export default {
       this.$store.dispatch('operateTodoTask', {
         type: 'delete',
         data: taskId,
+      }).then(() => {
+        this.taskList.splice(index, 1);
+        this.handleToggleEditPanel(this.editPanelOpened);
       });
-      this.taskList.splice(index, 1);
     },
     saveTaskEdit() {
       this.checkInput();
@@ -100,50 +104,54 @@ export default {
       if (!this.openedPanelIndex) return;
       const title = this.taskTitle[this.openedPanelIndex];
       const tomatoes = this.tomatoNums[this.openedPanelIndex];
-      if (!title || !tomatoes) {
-        const content = !title ?
-                        !tomatoes ?
-                        'Please enter the task title and estimate the amount of tomatoes!' :
-                        'Please enter the task title!' :
-                        'Please estimate the amount of tomatoes!';
-        this.$store.commit('triggerModal',{ 
-          title: 'Error',
-          content,
-          button: [
-            {
-              title: 'OK',
-              type: 'primary',
-              method: () => {
-                this.$store.commit('triggerModal', null);
-              },
-            }
-          ],
-        });
+      if (title && tomatoes) {
+        this.updateTask();
         return;                   
       }
-      this.updateTask();
+      const content = !title ?
+                      !tomatoes ?
+                      'Please enter the task title and estimate the amount of tomatoes!' :
+                      'Please enter the task title!' :
+                      'Please estimate the amount of tomatoes!';
+      this.$store.commit('triggerModal',{ 
+        title: 'Error',
+        content,
+        button: [
+          {
+            title: 'OK',
+            type: 'primary',
+            method: () => {
+              this.$store.commit('triggerModal', null);
+            },
+          }
+        ],
+      });
     },
     updateTask() {
-      const targetId = this.data.list[this.openedPanelIndex].id;
+      let updatedTask = this.data.list[this.openedPanelIndex];
+      updatedTask.title = this.taskTitle[this.openedPanelIndex];
+      updatedTask.tomatoes = this.tomatoNums[this.openedPanelIndex];
+      const targetId = updatedTask.id;
+      
       this.$store.dispatch('operateTodoTask', {
         type: 'update',
         data: {
-          task: this.data,
+          task: updatedTask,
           dataToUpdateStorage: [
             {
-              storage: 'addTodoTask',
               targetId,
               column: 'title',
               data: this.taskTitle[this.openedPanelIndex],
             },
             {
-              storage: 'addTodoTask',
               targetId,
               column: 'tomatoes',
               data: this.tomatoNums[this.openedPanelIndex],
             },
           ],
         },
+      }).then(() => {
+        this.handleToggleEditPanel(this.editPanelOpened);
       });
     },
   },

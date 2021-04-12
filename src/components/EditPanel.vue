@@ -33,6 +33,10 @@ export default {
       type: Number,
       required: true,
     },
+    clearValue: {
+      type: Boolean,
+      required: false,
+    },
   },
   data() {
     return {
@@ -52,6 +56,13 @@ export default {
         col: 'tomatoNums',
         val: num,
       });
+    },
+    clearValue(clear) {
+      if (!clear) {
+        return;
+      }
+      this.taskTitle = '';
+      this.tomatoNums = 0;
     },
   },
 }
