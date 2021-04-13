@@ -1,0 +1,113 @@
+.analytic-number {
+  margin-bottom: 25px;
+}
+
+.number {
+  &-list {
+    background-color: $gray-dark;
+    padding: 15px 0 20px 0;
+    display: flex;
+  }
+
+  &-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 50%;
+    border-right: 1px solid $gray-medium-darker;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+  
+  &-amount {
+    color: $red;
+    font-weight: 900;
+    font-size: 50px;
+    letter-spacing: 2.5px;
+    line-height: 60px;
+  }
+
+  &-title {
+    color: $white;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    line-height: 12px;
+  }
+}
+
+.title-week {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  line-height: 12px;
+  color:$white;
+}
+
+.chart {
+  &-list {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  &-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 0 auto;
+  }
+
+  &-pies {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $gray-dark;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    flex: 1 0 110px;
+    padding-top: 50px;
+
+    &-amount {
+      color: $red;
+      text-align:center;
+      margin-bottom: 5px;
+    }
+
+    &-pie {
+      display: block;
+      width: 25px;
+      height: 9px;
+      border-radius: 5px;
+      background-color: $red;
+
+      &:not(:last-child) {
+        margin-bottom: 1px;
+      }
+    }
+  }
+
+  &-date {
+    margin-top: auto;
+
+    &-text {
+      text-align: center;
+      display: block;
+
+      &.date {
+        font-size: 10px;
+        letter-spacing: 0.5px;
+        line-height: 10px;
+        color: $white;
+        margin-bottom: 5px;
+      }
+
+      &.weekday {
+        font-size: 8px;
+        letter-spacing: 0.4px;
+        line-height: 10px;
+        color: $gray-light;
+      }
+    }
+  }
+}

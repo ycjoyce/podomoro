@@ -50,3 +50,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+  .title-secondary {
+    margin-bottom: 10px;
+  }
+</style>
