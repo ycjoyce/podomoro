@@ -14,6 +14,27 @@ export default new Vuex.Store({
     curPage: 'add',
     modalData: null,
     todoTask: [],
+    ringtoneAudio: [
+			{
+				id: 1,
+				title: 'Brett Young',
+				src: require('@/assets/ringtone/brett__young_.mp3'),
+			},
+			{
+				id: 2,
+				title: 'Got what I got',
+				src: require('@/assets/ringtone/got_what_i_got.mp3'),
+			},
+			{
+				id: 3,
+				title: 'Suga boom boom',
+				src: require('@/assets/ringtone/suga_boom_boom.mp3'),
+			}
+		],
+    ringtoneIdSelected: {
+      work: 1,
+      break: 1,
+    },
   },
   mutations: {
     switchPage(state, page) {
@@ -38,6 +59,9 @@ export default new Vuex.Store({
       const targetIndex = state.todoTask.findIndex((task) => task.id === data.id);
       state.todoTask.splice(targetIndex, 1, data);
     },
+    setRingtone(state, { type, id }) {
+      state.ringtoneIdSelected[type] = id;
+    },
   },
   actions: {
     operateTodoTask({ commit }, { type, data }) {
@@ -59,6 +83,13 @@ export default new Vuex.Store({
         default:
           break;
       }
+    },
+    setRingtone({ state, commit }, data) {
+      commit('setRingtone', data);
+      if (localStorage.getItem('ringtone')) {
+        localStorage.removeItem('ringtone');
+      }
+      localStorage.setItem('ringtone', JSON.stringify(state.ringtoneIdSelected));
     },
   },
 });

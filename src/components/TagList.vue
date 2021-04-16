@@ -22,6 +22,7 @@
       <RingtoneTag
         class="content-list ringtone"
         v-else-if="data.type === 'ringtoneList'"
+        :data="getTagData(curTag)"
       />
 
       <p
