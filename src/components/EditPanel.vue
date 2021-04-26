@@ -33,8 +33,8 @@ export default {
       type: Number,
       required: true,
     },
-    clearValue: {
-      type: Boolean,
+    defaultValue: {
+      type: Object,
       required: false,
     },
   },
@@ -57,13 +57,12 @@ export default {
         val: num,
       });
     },
-    clearValue(clear) {
-      if (!clear) {
-        return;
-      }
-      this.taskTitle = '';
-      this.tomatoNums = 0;
-    },
+  },
+  created() {
+    if (this.defaultValue) {
+      this.taskTitle = this.defaultValue.title;
+      this.tomatoNums = this.defaultValue.tomatoes;
+    }
   },
 }
 </script>

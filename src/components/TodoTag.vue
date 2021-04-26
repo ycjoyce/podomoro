@@ -15,9 +15,12 @@
       <EditPanel
         pos="tag-list"
         :tomatoAmount="10"
+        :defaultValue="{
+          title: item.title,
+          tomatoes: item.tomatoes,
+        }"
         @updateTaskTitle="setValue"
         @updateTomatoNums="setValue"
-        :clearValue="whetherClearEditPanel"
         v-show="editPanelOpened === `${data.title}-${itemIndex}`"
       >
         <template v-slot:buttons>
@@ -70,9 +73,8 @@ export default {
     return {
       taskList: this.data.list,
       editPanelOpened: null,
-      taskTitle: Array.from({ length: this.data.list.length }, () => ''),
-      tomatoNums: Array.from({ length: this.data.list.length }, () => 0),
-      whetherClearEditPanel: null,
+      taskTitle: this.data.list.map((item) => item.title),
+      tomatoNums: this.data.list.map((item) => item.tomatoes),
     };
   },
   computed: {
