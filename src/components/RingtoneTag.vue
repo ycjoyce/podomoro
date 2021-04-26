@@ -12,12 +12,12 @@
           :value="`ringtone-${ringtone.id}`"
           :id="`ringtone-${ringtone.id}`"
           class="content-radio"
-          :checked="ringtone.id === $store.state.ringtoneIdSelected[data.title.toLowerCase()]"
+          :checked="ringtone.id === $store.state.ringtoneIdSelected[lowerCaseTitle]"
           @change="selectRingtone(data.title, ringtone.id)"
         >
 
         <label
-          :for="`audio-${data.title.toLowerCase()}-${ringtone.id}`"
+          :for="`${lowerCaseTitle}-${ringtone.id}`"
           class="content-label"
         ></label>
 
@@ -29,18 +29,18 @@
       <audio
         :src="ringtone.src"
         class="content-audio"
-        :id="`audio-${data.title.toLowerCase()}-${ringtone.id}`"
-        :ref="`audio-${data.title.toLowerCase()}-${ringtone.id}`"
+        :id="`${lowerCaseTitle}-${ringtone.id}`"
+        :ref="`${lowerCaseTitle}-${ringtone.id}`"
         @ended="clearRingtone">
       </audio>
 
       <button
         class="content-btn-play"
         :class="{
-          toPlay: !pauseAllRing || curPlayId !== `${data.title.toLowerCase()}-${ringtone.id}`,
-          toPause: pauseAllRing && curPlayId === `${data.title.toLowerCase()}-${ringtone.id}`,
+          toPlay: curPlayId !== `${lowerCaseTitle}-${ringtone.id}`,
+          toPause: curPlayId === `${lowerCaseTitle}-${ringtone.id}`,
         }"
-        @click="playRintone(ringtone.id)"
+        @click="toggleRingtone(`${lowerCaseTitle}-${ringtone.id}`)"
       ></button>
     </li>
   </ul>
@@ -56,7 +56,9 @@ export default {
   },
   data() {
     return {
-      pauseAllRingtone: false,
+      lowerCaseTitle: `audio-${this.data.title.toLowerCase()}`,
+      pauseAllRingtone: true, // 全部都暫停
+      curPlayId: null,
     };
   },
   methods: {
@@ -73,6 +75,32 @@ export default {
         }
       });
       this.pauseAllRingtone = true;
+    },
+    toggleRingtone(id) {
+      const targetAudio = this.$refs[id][0];
+
+      if (this.curPlayId === id) {
+        // 這首正在播，要暫停
+        this.curPlayId = null;
+        targetAudio.pause();
+        this.pauseAllRingtone = true;
+        return;
+      }
+      // 點了別首
+      this.curPlayId = id;
+      this.clearRingtone();
+      targetAudio.play();
+    },
+    created() {
+      if (localStorage.getItem('ringtone')) {
+        const data = JSON.parse(localStorage.getItem('ringtone'));
+        for (let key in data) {
+          this.$store.commit('setRingtone', {
+            type: key,
+            id: data[key],
+          });
+        }
+      }
     },
   },
 }
