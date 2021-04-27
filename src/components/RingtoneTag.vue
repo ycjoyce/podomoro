@@ -12,12 +12,12 @@
           :value="`ringtone-${ringtone.id}`"
           :id="`ringtone-${ringtone.id}`"
           class="content-radio"
-          :checked="ringtone.id === $store.state.ringtoneIdSelected[lowerCaseTitle]"
+          :checked="ringtone.id === $store.state.ringtoneIdSelected[data.title.toLowerCase()]"
           @change="selectRingtone(data.title, ringtone.id)"
         >
 
         <label
-          :for="`${lowerCaseTitle}-${ringtone.id}`"
+          :for="`ringtone-${ringtone.id}`"
           class="content-label"
         ></label>
 
@@ -57,9 +57,14 @@ export default {
   data() {
     return {
       lowerCaseTitle: `audio-${this.data.title.toLowerCase()}`,
-      pauseAllRingtone: true, // 全部都暫停
+      pauseAllRingtone: true,
       curPlayId: null,
     };
+  },
+  computed: {
+    tagTitle() {
+      return this.data.title;
+    },
   },
   methods: {
     selectRingtone(type, id) {
@@ -80,27 +85,34 @@ export default {
       const targetAudio = this.$refs[id][0];
 
       if (this.curPlayId === id) {
-        // 這首正在播，要暫停
         this.curPlayId = null;
         targetAudio.pause();
         this.pauseAllRingtone = true;
         return;
       }
-      // 點了別首
+
       this.curPlayId = id;
       this.clearRingtone();
       targetAudio.play();
     },
-    created() {
-      if (localStorage.getItem('ringtone')) {
-        const data = JSON.parse(localStorage.getItem('ringtone'));
-        for (let key in data) {
-          this.$store.commit('setRingtone', {
-            type: key,
-            id: data[key],
-          });
-        }
+  },
+  created() {
+    if (localStorage.getItem('ringtone')) {
+      const data = JSON.parse(localStorage.getItem('ringtone'));
+
+      for (let key in data) {
+        this.$store.commit('setRingtone', {
+          type: key,
+          id: data[key],
+        });
       }
+    }
+  },
+  watch: {
+    tagTitle() {
+      if (!this.curPlayId) return;
+      this.clearRingtone();
+      this.curPlayId = null;
     },
   },
 }

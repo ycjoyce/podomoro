@@ -60,7 +60,7 @@ export default new Vuex.Store({
       state.todoTask.splice(targetIndex, 1, data);
     },
     setRingtone(state, { type, id }) {
-      state.ringtoneIdSelected[type] = id;
+      state.ringtoneIdSelected[type.toLowerCase()] = id;
     },
   },
   actions: {

@@ -64,11 +64,11 @@ export default {
   },
   computed: {
     getTagData() {
-      return function(title) {
-        return this.data.tags.find((tag) => (
+      return (title) => (
+        this.data.tags.find((tag) => (
           tag.title === title
-        ));
-      }
+        ))
+      );
     },
   },
 }
