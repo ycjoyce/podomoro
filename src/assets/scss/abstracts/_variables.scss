@@ -1,11 +1,16 @@
-$white: #FCFCFC;
-$gray-light: #EAEAEA;
-$gray-medium: #ACACAC;
-$gray-medium-darker: #6E6E6E;
-$gray-dark: #414141;
-$black: #333333;
-$red: #EA5548;
-$green: #316901;
+$theme-color: (
+  primary: #EA5548,
+  secondary: #316901,
+);
+
+$grayscale-color: (
+  0: #FCFCFC,
+  1: #EAEAEA,
+  2: #ACACAC,
+  3: #6E6E6E,
+  4: #414141,
+  5: #333333,
+);
 
 $pc-gap: 30px;
 $pad-gap: 20px;

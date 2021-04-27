@@ -4,7 +4,7 @@
 
 .number {
   &-list {
-    background-color: $gray-dark;
+    background-color: map-get($grayscale-color, 4);
     padding: 15px 0 20px 0;
     display: flex;
   }
@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
     flex: 1 0 50%;
-    border-right: 1px solid $gray-medium-darker;
+    border-right: 1px solid map-get($grayscale-color, 3);
 
     &:last-child {
       border-right: none;
@@ -22,7 +22,7 @@
   }
   
   &-amount {
-    color: $red;
+    color: map-get($theme-color, primary);
     font-weight: 900;
     font-size: 50px;
     letter-spacing: 2.5px;
@@ -30,7 +30,7 @@
   }
 
   &-title {
-    color: $white;
+    color: map-get($grayscale-color, 0);
     font-size: 10px;
     letter-spacing: 0.5px;
     line-height: 12px;
@@ -41,7 +41,7 @@
   font-size: 10px;
   letter-spacing: 0.5px;
   line-height: 12px;
-  color:$white;
+  color:map-get($grayscale-color, 0);
 }
 
 .chart {
@@ -62,14 +62,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: $gray-dark;
+    background-color: map-get($grayscale-color, 4);
     justify-content: flex-end;
     margin-bottom: 10px;
     flex: 1 0 110px;
     padding-top: 50px;
 
     &-amount {
-      color: $red;
+      color: map-get($theme-color, primary);
       text-align:center;
       margin-bottom: 5px;
     }
@@ -79,7 +79,7 @@
       width: 25px;
       height: 9px;
       border-radius: 5px;
-      background-color: $red;
+      background-color: map-get($theme-color, primary);
 
       &:not(:last-child) {
         margin-bottom: 1px;
@@ -98,7 +98,7 @@
         font-size: 10px;
         letter-spacing: 0.5px;
         line-height: 10px;
-        color: $white;
+        color: map-get($grayscale-color, 0);
         margin-bottom: 5px;
       }
 
@@ -106,7 +106,7 @@
         font-size: 8px;
         letter-spacing: 0.4px;
         line-height: 10px;
-        color: $gray-light;
+        color: map-get($grayscale-color, 1);
       }
     }
   }

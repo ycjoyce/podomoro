@@ -1,5 +1,5 @@
 .main-area {
-  background-color: $gray-light;
+  background-color: map-get($grayscale-color, 1);
   height: 100%;
   flex: 1 1 50%;
   overflow-y: scroll;

@@ -8,24 +8,24 @@
   color: #fff;
 
   &.primary {
-    @include initial-button($red);
+    @include initial-button(map-get($theme-color, primary));
   }
 
   &.secondary {
-    @include initial-button($gray-medium-darker);
+    @include initial-button(map-get($grayscale-color, 3));
   }
 
   &.border {
     background-color: transparent;
 
     &.primary {
-      border: 2px solid $red;
-      color: $red;
+      border: 2px solid map-get($theme-color, primary);
+      color: map-get($theme-color, primary);
     }
 
     &.secondary {
-      border: 2px solid $gray-medium-darker;
-      color: $gray-medium-darker;
+      border: 2px solid map-get($grayscale-color, 3);
+      color: map-get($grayscale-color, 3);
     }
   }
 
@@ -41,7 +41,7 @@
     }
 
     &.secondary {
-      color: $white;
+      color: map-get($grayscale-color, 0);
     }
   }
 
@@ -58,13 +58,13 @@
   &.pos-tag-list {
     padding: 12px 15px;
     font-weight: 900;
-    color: $white;
+    color: map-get($grayscale-color, 0);
     &:not(:last-child) {
       margin-right: 20px;
     }
 
     &.secondary {
-      background-color: $gray-medium-darker;
+      background-color: map-get($grayscale-color, 3);
     }
 
     &.primary {

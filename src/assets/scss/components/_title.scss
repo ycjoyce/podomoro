@@ -8,11 +8,11 @@
     line-height: 24px;
     padding-bottom: $pc-gap;
     margin-bottom: $pc-gap;
-    border-bottom: 1px solid $gray-dark;
+    border-bottom: 1px solid map-get($grayscale-color, 4);
   }
 
   &-secondary {
-    color: $gray-medium;
+    color: map-get($grayscale-color, 2);
     font-size: 14px;
     letter-spacing: 0.7px;
     line-height: 17px;

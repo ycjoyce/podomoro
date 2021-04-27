@@ -4,9 +4,13 @@
 @import '~@/assets/scss/base/reset';
 @import '~@/assets/scss/base/typography';
 
-@import '~@/assets/scss/components/panel-outer-container';
+@import '~@/assets/scss/layout/panel-outer-container';
+@import '~@/assets/scss/layout/main-container';
+@import '~@/assets/scss/layout/aside-area';
+@import '~@/assets/scss/layout/main-area';
+@import '~@/assets/scss/layout/analytic-panel';
+
 @import '~@/assets/scss/components/title';
-@import '~@/assets/scss/components/main-container';
 @import '~@/assets/scss/components/main-circle';
 @import '~@/assets/scss/components/product-name';
 @import '~@/assets/scss/components/button-bar';
@@ -14,7 +18,4 @@
 @import '~@/assets/scss/components/tomatoes-to-select';
 @import '~@/assets/scss/components/my-button';
 @import '~@/assets/scss/components/modal';
-@import '~@/assets/scss/components/aside-area';
-@import '~@/assets/scss/components/main-area';
 @import '~@/assets/scss/components/tag-list';
-@import '~@/assets/scss/components/analytic-panel';

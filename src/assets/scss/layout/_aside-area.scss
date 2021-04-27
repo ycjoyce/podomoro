@@ -2,7 +2,7 @@
   flex-shrink: 1;
   height: 100%;
   display: flex;
-  background-color: $black;
+  background-color: map-get($grayscale-color, 5);
 
   @include rwd(mobile) {
     flex-direction: column-reverse;
@@ -11,7 +11,7 @@
 
 .aside-panel {
   width: calc(50vw - 80px);
-  border-left: 2px solid $gray-dark;
+  border-left: 2px solid map-get($grayscale-color, 4);
   overflow-y: scroll;
   @include rwd(mobile) {
     width: 100vw;

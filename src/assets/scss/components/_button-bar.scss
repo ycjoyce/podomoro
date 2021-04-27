@@ -5,7 +5,7 @@
   align-items: center;
   width: 80px;
   height: 100%;
-  background-color: $black;
+  background-color: map-get($grayscale-color, 5);
   @include rwd(mobile) {
     height: 80px;
     width: 100vw;
@@ -50,7 +50,7 @@
     bottom: 30px;
     right: 17px;
     z-index: 20;
-    @include initial-button($white);
+    @include initial-button(map-get($grayscale-color, 0));
     @include rwd(mobile){
       right: unset;
       left: 0;

@@ -9,14 +9,14 @@
   }
 
   &-bgc {
-    background-color: $black;
+    background-color: map-get($grayscale-color, 5);
     opacity: 0.9;
     width: 100vw;
     height: 100vh;
   }
 
   &-dialog {
-    background-color: $white;
+    background-color: map-get($grayscale-color, 0);
     position: absolute;
     left: 50%;
     top: 50%;

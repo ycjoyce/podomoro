@@ -11,21 +11,21 @@
     font-weight: 900;
     border-radius: 8px 8px 0 0;
     cursor: pointer;
-    background-color: $gray-medium-darker;
-    color: $gray-medium;
+    background-color: map-get($grayscale-color, 3);
+    color: map-get($grayscale-color, 2);
 
     &:not(:last-child) {
       margin-right: 5px;
     }
 
     &.active {
-      color: $white;
-      background-color: $red;
+      color: map-get($grayscale-color, 0);
+      background-color: map-get($theme-color, primary);
     }
   }
 
   &-panel {
-    background-color: $gray-dark;
+    background-color: map-get($grayscale-color, 4);
 
     &-empty {
       font-size: 14px;
@@ -33,15 +33,15 @@
       line-height: 20px;
       text-align: center;
       padding: $pc-gap;
-      color: $white;
+      color: map-get($grayscale-color, 0);
     }
   }
 }
 
 .content {
   &-item {
-    padding: 10px 10px 5px 10px;
-    border-bottom: 1px solid $black;
+    padding: 10px;
+    border-bottom: 1px solid map-get($grayscale-color, 5);
   }
 
   &-title {
@@ -91,7 +91,7 @@
       font-size: 16px;
       letter-spacing: 0.8px;
       line-height: 19px;
-      color: $white;
+      color: map-get($grayscale-color, 0);
       text-align: justify;
     }
 
@@ -108,14 +108,14 @@
       }
 
       &-circle {
-        border: 1px solid $red;
+        border: 1px solid map-get($theme-color, primary);
         border-radius: 100%;
         display: block;
         width: 8px;
         height: 8px;
 
         &.completed {
-          background-color: $red;
+          background-color: map-get($theme-color, primary);
         }
       }
     }
@@ -135,7 +135,7 @@
         display: inline-block;
         width: 2px;
         height: 2px;
-        background-color: $gray-medium;
+        background-color: map-get($grayscale-color, 2);
         border-radius: 100%;
         margin-right: 3px;
         line-height: 40px;
@@ -144,7 +144,7 @@
   }
 
   &-panel {
-    border-top: 1px solid $black;
+    border-top: 1px solid map-get($grayscale-color, 5);
     padding-top: 15px;
     width: calc(100% - 80px);
     margin: 0 auto;
@@ -154,10 +154,6 @@
     }
     @include rwd(mobile) {
       width: calc(100% - 40px);
-    }
-
-    &.hide {
-      display: none;
     }
 
     &-tomato {
@@ -186,7 +182,7 @@
           display: inline-block;
           width: 12px;
           height: 12px;
-          border: 2px solid $red;
+          border: 2px solid map-get($theme-color, primary);
           border-radius: 100%;
           vertical-align: middle;
           margin-right: 10px;
@@ -197,7 +193,7 @@
           display: none;
 
           &:checked +label{
-            background: $red;
+            background: map-get($theme-color, primary);
           }
         }
 
@@ -206,7 +202,7 @@
             font-size: 16px;
             letter-spacing: 0.8px;
             line-height: 19px;
-            color: $white;
+            color: map-get($grayscale-color, 0);
             text-align: justify;
           }
         }
@@ -222,7 +218,7 @@
             height: 20px;
             padding: 0;
             border-radius: 100%;
-            border: 2px solid $gray-medium-darker;
+            border: 2px solid map-get($grayscale-color, 3);
             cursor: pointer;
             @include set-background-image(contain);
 

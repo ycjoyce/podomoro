@@ -6,7 +6,6 @@
 
     <EditPanel
       pos="add-new-task"
-      :buttons="editPanelButtons"
       :tomatoAmount="10"
       @updateTaskTitle="setValue"
       @updateTomatoNums="setValue"
