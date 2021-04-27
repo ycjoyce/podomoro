@@ -11,3 +11,132 @@
     @include main-circle(300px, 70%);
   }
 }
+
+.main-circle {
+  border-radius: 100%;
+  background-color: map-get($grayscale-color, 2);
+  position: relative;
+  overflow: hidden;
+  position: relative;
+  @include rwd(mobile){ 
+    margin-top: 20px;
+  }
+
+  &.break {
+    background-image: linear-gradient(to right, transparent 50%, map-get($theme-color, assist) 0);   
+  }
+
+  &-rotate {
+    display: block;
+    width: 50%;
+    background: map-get($grayscale-color, 2);
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform-origin: left;
+  }
+
+  &-time {
+    @include main-circle(70%,70%);         
+    background-color:#fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+
+    &-text {
+      font-size: 40px;
+      letter-spacing: 4px;
+      line-height: 48px;
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.main-circle {
+  &-complete {
+    text-align: center;
+    cursor: pointer;
+    margin-top: 50px;
+    font-size: 14px;
+    letter-spacing: 1.4px;
+    line-height: 17px;
+    @include rwd(mobile) {
+      margin-top: 30px;
+    }
+
+    &-img {
+      display: inline-block;
+      width: 16px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  }
+}
+
+.btn {
+  &-group {
+    margin-top: 50px;
+    text-align: center;
+    @include rwd(mobile) {
+      margin-top: 20px;
+    }
+
+    &.break {
+      .btn {
+        &-play.selected {
+          background-image: url('~@/assets/img/start_green.svg');
+        }
+
+        &-pause.selected {
+          background-image: url('~@/assets/img/pause_green.svg');
+        }
+
+        &-reset.selected {
+          background-image: url('~@/assets/img/reset_green.svg');
+        }
+      }
+    }
+  }
+
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  @include initial-button(map-get($grayscale-color, 0));
+  @include set-background-image(contain);
+  cursor: pointer;            
+  
+  &:not(:last-child) {
+    margin-right: 75px;
+  }
+
+  &-play {
+    background-image: url('~@/assets/img/play_gray.svg');
+
+    &.selected {
+      background-image: url('~@/assets/img/start_red.svg');
+    }
+  }
+
+  &-pause {
+    background-image: url('~@/assets/img/pause_gray.svg');
+
+    &.selected {
+      background-image: url('~@/assets/img/pause_red.svg');
+    }
+  }
+
+  &-reset {
+    background-image: url('~@/assets/img/reset_gray.svg');
+
+    &.selected {
+      background-image: url('~@/assets/img/reset_red.svg');
+    }
+  }
+}

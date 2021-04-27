@@ -1,0 +1,49 @@
+.title {
+  &-title {
+    font-size: 24px;
+    letter-spacing: 1.2px;
+    line-height: 29px;
+    text-align: center;
+  }
+
+  &-break-state {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: map-get($grayscale-color, 0);
+    background-color: #B5E254;
+    width: 60px;
+    padding: 3px 0;
+    border-radius: 10px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+  }
+
+  &-count {
+    &-list {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    &-item {
+      display: inline-block;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+
+    &-circle {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 100%;
+      border: 2px solid map-get($theme-color, primary);
+
+      &.completed{ 
+        background-color: map-get($theme-color, primary);
+      }
+    }
+  }
+}

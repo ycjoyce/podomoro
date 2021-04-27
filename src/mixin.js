@@ -13,17 +13,21 @@ module.exports = {
 		};
 	},
   computed: {
-    getCompletedCircle() {
-			return function(data, tomatoIndex) {
-				if (!Array.isArray(data.progress)) {
-					return;
+    completedCircleAmt() {
+      return (data) => {
+        if (!Array.isArray(data.progress) || data.progress.length < 1) {
+					return 0;
 				}
-        let totalCount = data.progress.reduce((a, e) => a + e.count, 0);
-        return tomatoIndex + 1 <= totalCount;
-			};
+        return data.progress.reduce((a, e) => a + e.count, 0);
+      }
+    },
+    getCompletedCircle() {
+			return (data, tomatoIndex) => (
+        tomatoIndex + 1 <= this.completedCircleAmt(data)
+      );
 		},
 		calArrSum() {
-      return function(arr) {
+      return (arr) => {
         if (!Array.isArray(arr) || arr.length < 1) {
           return 0;
         }
@@ -31,7 +35,7 @@ module.exports = {
       }
     },
 		getProgressAmount() {
-      return function(dateIns) {
+      return (dateIns) => {
         const date = dateIns.toLocaleDateString();
         const amountArr = this.$store.state.todoTask.filter((task) => (
           task.progress.some((el) => el.date === date)
@@ -42,7 +46,7 @@ module.exports = {
       }
     },
 		formattedDate() {
-      return function(dateIns) {
+      return (dateIns) => {
         const month = dateIns.getMonth() + 1;
         const day = dateIns.getDate();
         const weekday = this.weekday[dateIns.getDay()];
@@ -50,6 +54,13 @@ module.exports = {
 					date: `${month}/${day}`,
 					weekday,
 				};
+      }
+    },
+    formattedTime() {
+      return (sec) => {
+        const mins = Math.round(sec / 60);
+        const secs = sec - mins * 60;
+        return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
       }
     },
   },

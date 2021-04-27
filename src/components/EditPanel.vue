@@ -1,5 +1,5 @@
 <template>
-  <div :class="pos === 'tag-list' ? 'content-panel' : ''">
+  <div :class="{'content-panel': pos === 'tag-list'}">
     <TextInput
       title="TASK TITLE"
       :modelValue.sync="taskTitle"

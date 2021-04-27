@@ -45,6 +45,17 @@ export default {
     this.initExistedTasks();
     this.getWindowHeight();
     window.addEventListener('resize', this.getWindowHeight);
+
+    if (localStorage.getItem('ringtone')) {
+      const data = JSON.parse(localStorage.getItem('ringtone'));
+
+      for (let key in data) {
+        this.$store.commit('setRingtone', {
+          type: key,
+          id: data[key],
+        });
+      }
+    }
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.getWindowHeight);

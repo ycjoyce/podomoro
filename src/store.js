@@ -35,6 +35,17 @@ export default new Vuex.Store({
       work: 1,
       break: 1,
     },
+    curTask: {
+      id: null,
+      completedCircles: null,
+      time: null,
+      status: null,
+    },
+  },
+  getters: {
+    curTaskData(state) {
+      return state.todoTask.find((task) => task.id === state.curTask.id);
+    },
   },
   mutations: {
     switchPage(state, page) {
@@ -61,6 +72,14 @@ export default new Vuex.Store({
     },
     setRingtone(state, { type, id }) {
       state.ringtoneIdSelected[type.toLowerCase()] = id;
+    },
+    setCurTask(state, { col, val }) {
+      state.curTask[col] = val;
+    },
+    clearCurTask(state) {
+      for (let col in state.curTask) {
+        state.curTask[col] = null;
+      }
     },
   },
   actions: {
@@ -90,6 +109,19 @@ export default new Vuex.Store({
         localStorage.removeItem('ringtone');
       }
       localStorage.setItem('ringtone', JSON.stringify(state.ringtoneIdSelected));
+    },
+    setCurTask({ commit }, data) {
+      if (!data) {
+        commit('clearCurTask');
+        return;
+      }
+      if (!Array.isArray(data)) {
+        commit('setCurTask', data);
+        return;
+      }
+      for (let item of data) {
+        commit('setCurTask', item);
+      }
     },
   },
 });

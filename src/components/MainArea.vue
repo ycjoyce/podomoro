@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     checkType() {
-      return 'PendingMain';
+      return 'ClockMain';
     },
   },
 }
