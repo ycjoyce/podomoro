@@ -23,24 +23,14 @@ export default {
 				tags: [
 					{
 						title: 'TO DO',
-						list: this.todoList,
+						list: this.$store.getters.taskNotCompleted,
 					},
 					{
 						title: 'DONE',
-						list: this.doneList,
+						list: this.$store.getters.taskCompleted,
 					}
 				],
       };
-    },
-    todoList() {
-      return this.$store.state.todoTask.filter((task) => (
-        !task.completed && task.show
-      ));
-    },
-    doneList() {
-      return this.$store.state.todoTask.filter((task) => (
-        task.completed && task.show
-      ));
     },
   },
 }

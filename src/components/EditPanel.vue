@@ -67,6 +67,12 @@ export default {
         this.tomatoNums = 0;
       }
     },
+    'defaultValue.title': function(val) {
+      this.taskTitle = val;
+    },
+    'defaultValue.tomatoes': function(val) {
+      this.tomatoNums = val;
+    },
   },
   created() {
     if (this.defaultValue) {

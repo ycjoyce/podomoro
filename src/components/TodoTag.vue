@@ -9,18 +9,17 @@
         :type="data.title"
         :data="item"
         :index="itemIndex"
-        @toggleEditPanel="handleToggleEditPanel"
         :editPanelOpened="editPanelOpened"
+        @toggleEditPanel="handleToggleEditPanel"
       />
+
       <EditPanel
         pos="tag-list"
         :tomatoAmount="10"
-        :defaultValue="{
-          title: item.title,
-          tomatoes: item.tomatoes,
-        }"
+        :defaultValue="defaultValue(item)"
         @updateTaskTitle="setValue"
         @updateTomatoNums="setValue"
+        v-if="data.title === 'TO DO'"
         v-show="editPanelOpened === `${data.title}-${itemIndex}`"
       >
         <template v-slot:buttons>
@@ -28,26 +27,39 @@
             <MyButton
               title="DELETE"
               type="secondary"
-              :method="deleteTask.bind(null, item.id, itemIndex)"
+              :method="deleteTask.bind(null, item.id)"
               pos="tag-list"
             /> 
             <MyButton
               title="SAVE"
               type="primary"
-              :method="saveTaskEdit.bind(null, item.id, itemIndex)"
+              :method="checkInput.bind(null, item.id, itemIndex)"
               pos="tag-list"
-              v-if="data.title === 'TO DO'"
-            /><!--
-            <MyButton
-              title="REDO"
-              type="primary"
-              class="pos-tag-list"
-              :method="toRedo.bind(null, item)"
-              v-if="getTagData(nowTag).title === 'DONE'"
-            /> -->
+            />
           </div>
         </template>
       </EditPanel>
+
+      <div
+        class="content-panel"
+        v-else
+        v-show="editPanelOpened === `${data.title}-${itemIndex}`"
+      >
+        <div class="content-panel-btn-area">
+          <MyButton
+            title="DELETE"
+            type="secondary"
+            :method="deleteTask.bind(null, item.id, itemIndex)"
+            pos="tag-list"
+          />
+          <MyButton
+            title="REDO"
+            type="primary"
+            :method="redoTask.bind(null, item.id, itemIndex)"
+            pos="tag-list"
+          />
+        </div>
+      </div>
     </li>
   </ul>
 </template>
@@ -71,13 +83,27 @@ export default {
   },
   data() {
     return {
-      taskList: this.data.list,
       editPanelOpened: null,
-      taskTitle: this.data.list.map((item) => item.title),
-      tomatoNums: this.data.list.map((item) => item.tomatoes),
     };
   },
   computed: {
+    taskList() {
+      return this.data.list;
+    },
+    taskTitle() {
+      return this.taskList.map((item) => item.title);
+    },
+    tomatoNums() {
+      return this.taskList.map((item) => item.tomatoes);
+    },
+    defaultValue() {
+      return (task) => (
+        {
+          title: task.title,
+          tomatoes: task.tomatoes,  
+        }
+      );
+    },
     openedPanelIndex() {
       return !this.editPanelOpened ? null : this.editPanelOpened.slice().split('-').pop();
     },
@@ -90,31 +116,29 @@ export default {
     handleToggleEditPanel(index) {
       this.editPanelOpened = this.editPanelOpened !== index ? index : null;
     },
-    deleteTask(taskId, index) {
+    deleteTask(id) {
       this.$store.dispatch('operateTodoTask', {
         type: 'delete',
-        data: taskId,
+        data: id,
       }).then(() => {
-        this.taskList.splice(index, 1);
         this.handleToggleEditPanel(this.editPanelOpened);
       });
     },
-    saveTaskEdit() {
-      this.checkInput();
-    },
-    checkInput() {
-      if (!this.openedPanelIndex) return;
-      const title = this.taskTitle[this.openedPanelIndex];
-      const tomatoes = this.tomatoNums[this.openedPanelIndex];
+    checkInput(id, index) {
+      const title = this.taskTitle[index];
+      const tomatoes = this.tomatoNums[index];
+
       if (title && tomatoes) {
-        this.updateTask();
+        this.updateTask(id, index);
         return;                   
       }
+
       const content = !title ?
                       !tomatoes ?
                       'Please enter the task title and estimate the amount of tomatoes!' :
                       'Please enter the task title!' :
                       'Please estimate the amount of tomatoes!';
+
       this.$store.commit('triggerModal',{ 
         title: 'Error',
         content,
@@ -129,31 +153,48 @@ export default {
         ],
       });
     },
-    updateTask() {
-      let updatedTask = this.data.list[this.openedPanelIndex];
-      updatedTask.title = this.taskTitle[this.openedPanelIndex];
-      updatedTask.tomatoes = this.tomatoNums[this.openedPanelIndex];
-      const targetId = updatedTask.id;
-      
+    updateTask(id, index) {
+      let updatedTask = JSON.parse(JSON.stringify(this.taskList[index]));
+      updatedTask.title = this.taskTitle[index];
+      updatedTask.tomatoes = this.tomatoNums[index];
+
       this.$store.dispatch('operateTodoTask', {
         type: 'update',
         data: {
           task: updatedTask,
           dataToUpdateStorage: [
             {
-              targetId,
+              targetId: id,
               column: 'title',
-              data: this.taskTitle[this.openedPanelIndex],
+              data: this.taskTitle[index],
             },
             {
-              targetId,
+              targetId: id,
               column: 'tomatoes',
-              data: this.tomatoNums[this.openedPanelIndex],
+              data: this.tomatoNums[index],
             },
           ],
         },
       }).then(() => {
         this.handleToggleEditPanel(this.editPanelOpened);
+      });
+    },
+    redoTask(id, index) {
+      let updatedTask = JSON.parse(JSON.stringify(this.taskList[index]));
+			updatedTask.completed = false;
+
+      this.$store.dispatch('operateTodoTask', {
+        type: 'update',
+        data: {
+          task: updatedTask,
+          dataToUpdateStorage: [
+            {
+              targetId: id,
+              column: 'completed',
+              data: false,
+            },
+          ],
+        },
       });
     },
   },
