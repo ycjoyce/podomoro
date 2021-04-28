@@ -123,5 +123,15 @@ export default new Vuex.Store({
         commit('setCurTask', item);
       }
     },
+    runTimer({ state, commit }) {
+      let prevTime = state.curTask.time;
+      if (prevTime < 1) {
+        return;
+      }
+      commit('setCurTask', {
+        col: 'time',
+        val: prevTime - 1,
+      });
+    },
   },
 });

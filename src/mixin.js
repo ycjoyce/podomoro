@@ -58,7 +58,7 @@ module.exports = {
     },
     formattedTime() {
       return (sec) => {
-        const mins = Math.round(sec / 60);
+        const mins = Math.floor(sec / 60);
         const secs = sec - mins * 60;
         return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
       }

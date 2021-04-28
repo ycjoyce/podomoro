@@ -71,6 +71,7 @@ export default {
       operateBtns: [
         'play', 'pause', 'reset'
       ],
+      timer: null,
     };
   },
   methods: {
@@ -90,13 +91,22 @@ export default {
       }
     },
     play() {
-      console.log('play');
+      this.timer = setInterval(() => {
+        this.$store.dispatch('runTimer');
+      }, 1000);
     },
     pause() {
-
+      clearInterval(this.timer);
     },
     reset() {
 
+    },
+  },
+  watch: {
+    '$store.state.curTask.time': function(val) {
+      if (val < 1) {
+        this.pause();
+      }
     },
   },
 }

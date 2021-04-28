@@ -68,13 +68,26 @@ export default {
     };
   },
   computed: {
+    originalTime() {
+      return this.task.tomatoes * this.perTomatoMin * 60;
+    },
     timeToShow() {
-      return this.formattedTime(this.task.tomatoes * this.perTomatoMin * 60);
+      return this.formattedTime(this.$store.state.curTask.time);
     },
     ringtoneSrc() {
       const status = this.$store.state.curTask.status;
       const ringtoneId = this.$store.state.ringtoneIdSelected[status];
       return this.$store.state.ringtoneAudio.find((ringtone) => ringtone.id === ringtoneId).src;
+    },
+  },
+  watch: {
+    hasMounted(val, oldVal) {
+      if (!oldVal && val) {
+        this.$store.commit('setCurTask', {
+          col: 'time',
+          val: this.originalTime,
+        });
+      }
     },
   },
   mounted() {
