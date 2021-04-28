@@ -24,7 +24,7 @@ export function deleteDataInStorage(storage, targetId) {
 }
 
 export function updateStorage({
-	storage = 'addTodoTask', targetId, column, data, whetherClearProgress
+	storage = 'addTodoTask', targetId, column, data, whetherClearProgress = false,
 }) {
 	let originalStorage = JSON.parse(localStorage.getItem(storage));
 	const targetIndex = originalStorage.findIndex((item) => item.id === targetId);

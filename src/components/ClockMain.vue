@@ -8,8 +8,9 @@
 
 				<clock
 					:task="taskToShow"
-					:perTomatoMin="0.5"
+					:perTomatoMin="0.1"
 					:reset="whetherResetClock"
+					@completeTask="completeTask"
 				/>
 
 				<clock-operate

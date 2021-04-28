@@ -1,7 +1,7 @@
 <template>
   <ul class="list number-list">
     <li class="number-item today">
-      <span class="number-amount title-secondary">
+      <span class="number-amount">
         {{getProgressAmount(new Date())}}
       </span>
 

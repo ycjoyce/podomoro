@@ -23,7 +23,7 @@
         <span
           class="title-count-circle"
           :class="{
-            completed: getCompletedCircle(task, n - 1) || n <= $store.state.curTask.completeCircles
+            completed: n <= $store.state.curTask.completedCircles
           }"
         ></span>
       </li>

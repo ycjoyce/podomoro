@@ -107,6 +107,8 @@ export default {
     },
     play() {
       this.$emit('resetClock', false);
+      
+      this.$store.dispatch('runTimer');
       this.timer = setInterval(() => {
         this.$store.dispatch('runTimer');
       }, 1000);

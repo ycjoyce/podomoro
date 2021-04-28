@@ -139,5 +139,32 @@ export default new Vuex.Store({
         val: prevTime - 1,
       });
     },
+    setCurTaskCompletedCircles({ state, commit, dispatch }, { task }) {
+      const newCircleAmt = state.curTask.completedCircles + 1;
+      const progressData = {
+        date: new Date().toLocaleDateString(),
+        count: newCircleAmt,
+      };
+
+      let updatedTask = JSON.parse(JSON.stringify(task));
+      updatedTask.progress.push(progressData);
+
+      commit('setCurTask', {
+        col: 'completedCircles',
+        val: newCircleAmt,
+      });
+
+      dispatch('operateTodoTask', {
+        type: 'update',
+        data: {
+          task: updatedTask,
+          dataToUpdateStorage: [{
+            targetId: task.id,
+            column: 'progress',
+            data: progressData,
+          }],
+        },
+      });
+    },
   },
 });

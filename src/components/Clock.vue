@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     originalTime() {
-      return this.task.tomatoes * this.perTomatoMin * 60;
+      return Math.round(this.task.tomatoes * this.perTomatoMin * 60);
     },
     timeToShow() {
       return this.formattedTime(this.$store.state.curTask.time);
@@ -84,21 +84,44 @@ export default {
       return this.$store.state.ringtoneAudio.find((ringtone) => ringtone.id === ringtoneId).src;
     },
   },
+  methods: {
+    setCurTaskToOriginalTime() {
+      this.$store.commit('setCurTask', {
+        col: 'time',
+        val: this.originalTime,
+      });
+    },
+  },
   watch: {
     hasMounted(val, oldVal) {
       if (!oldVal && val) {
-        this.$store.commit('setCurTask', {
-          col: 'time',
-          val: this.originalTime,
-        });
+        this.setCurTaskToOriginalTime();
       }
     },
     reset(val) {
       if (val) {
+        this.setCurTaskToOriginalTime();
+      }
+    },
+    originalTime(val, oldVal) {
+      if(oldVal && val) {
         this.$store.commit('setCurTask', {
           col: 'time',
-          val: this.originalTime,
+          val,
         });
+      }
+    },
+    '$store.state.curTask.time': function(val, oldVal) {
+      const unit = this.perTomatoMin * 60;
+      
+      if (val % unit === 0 && oldVal) {
+        this.$store.dispatch('setCurTaskCompletedCircles', {
+          task: this.task,
+        });
+      }
+
+      if (val < 1) {
+        this.$emit('completeTask');
       }
     },
   },
