@@ -9,9 +9,13 @@
 				<clock
 					:task="taskToShow"
 					:perTomatoMin="0.5"
+					:reset="whetherResetClock"
 				/>
 
-				<clock-operate/>
+				<clock-operate
+					@resetClock="setClockStatus"
+					@completeTask="completeTask"
+				/>
 			</div>
 		</div>
       
@@ -34,29 +38,73 @@ export default {
 		Clock,
 		ClockOperate,
 	},
+	data() {
+		return {
+			whetherResetClock: false,
+		};
+	},
 	computed: {
 		taskToShow() {
 			return this.$store.getters.curTaskData || {};
 		},
 	},
-	watch: {
-		'$store.state.todoTask.length': function(val, oldVal) {
-			if (!oldVal && val) {
-				this.$store.dispatch('setCurTask', [
-					{
-						col: 'id',
-						val: this.$store.state.todoTask[0].id,
-					},
-					{
-						col: 'status',
-						val: 'work',
-					},
-					{
-						col: 'completedCircles',
-						val: this.completedCircleAmt(this.taskToShow),
-					},
-				]);
+	methods: {
+		setClockStatus(val) {
+			this.whetherResetClock = val;
+		},
+		completeTask() {
+			if (Object.keys(this.taskToShow).length < 1) {
+				return;
 			}
+
+			let updatedTask = JSON.parse(JSON.stringify(this.taskToShow));
+			updatedTask.completed = true;
+			const targetId = updatedTask.id;
+
+			this.$store.dispatch('operateTodoTask', {
+        type: 'update',
+        data: {
+          task: updatedTask,
+          dataToUpdateStorage: [
+            {
+              targetId,
+              column: 'completed',
+              data: true,
+            },
+          ],
+        },
+      });
+		},
+		setCurTask() {
+			if (this.$store.getters.taskNotCompleted.length < 1) {
+				this.$store.commit('clearCurTask');
+				return;
+			}
+
+			const curTask = this.$store.getters.taskNotCompleted[0];
+
+			this.$store.dispatch('setCurTask', [
+				{
+					col: 'id',
+					val: curTask.id,
+				},
+				{
+					col: 'status',
+					val: 'work',
+				},
+				{
+					col: 'completedCircles',
+					val: this.completedCircleAmt(curTask),
+				},
+			]);
+		},
+	},
+	mounted() {
+		this.setCurTask();
+	},
+	watch: {
+		'$store.getters.taskNotCompleted.length': function() {
+			this.setCurTask();
 		},
 	},
 }

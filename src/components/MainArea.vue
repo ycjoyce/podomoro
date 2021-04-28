@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     checkType() {
-      return 'ClockMain';
+      return this.$store.getters.taskNotCompleted.length > 0 ? 'ClockMain' : 'PendingMain';
     },
   },
 }

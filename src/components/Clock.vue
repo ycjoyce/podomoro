@@ -61,6 +61,10 @@ export default {
       type: Number,
       required: true,
     },
+    reset: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
@@ -83,6 +87,14 @@ export default {
   watch: {
     hasMounted(val, oldVal) {
       if (!oldVal && val) {
+        this.$store.commit('setCurTask', {
+          col: 'time',
+          val: this.originalTime,
+        });
+      }
+    },
+    reset(val) {
+      if (val) {
         this.$store.commit('setCurTask', {
           col: 'time',
           val: this.originalTime,

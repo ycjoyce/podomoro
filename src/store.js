@@ -43,6 +43,9 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    taskNotCompleted(state) {
+      return state.todoTask.filter((task) => !task.completed);
+    },
     curTaskData(state) {
       return state.todoTask.find((task) => task.id === state.curTask.id);
     },

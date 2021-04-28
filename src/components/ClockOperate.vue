@@ -4,13 +4,20 @@
       <button
         v-for="(btn, btnIndex) in operateBtns"
         :key="`btn-${btnIndex}`"
-        :class="['btn', `btn-${btn}`]"
+        :class="[
+          'btn',
+          `btn-${btn}`,
+          { selected: btnSelected === btn }
+        ]"
         :ref="`btn-${btn}`"
-        @click="handleOperate(btn)"
+        @click="handleOperate($event, btn)"
       ></button>
     </div>
 
-    <p class="main-circle-complete">
+    <p
+      class="main-circle-complete"
+      @click="completeTask"
+    >
       <img
         class="main-circle-complete-img"
         :src="require('@/assets/img/complete_colored.svg')"
@@ -72,10 +79,18 @@ export default {
         'play', 'pause', 'reset'
       ],
       timer: null,
+      btnSelected: null,
     };
   },
   methods: {
-    handleOperate(type) {
+    handleOperate(e, type) {
+      if (type === this.btnSelected) {
+        e.preventDefault();
+        return;
+      }
+
+      this.btnSelected = type;
+
       switch (type) {
         case 'play':
           this.play();
@@ -91,6 +106,7 @@ export default {
       }
     },
     play() {
+      this.$emit('resetClock', false);
       this.timer = setInterval(() => {
         this.$store.dispatch('runTimer');
       }, 1000);
@@ -99,7 +115,12 @@ export default {
       clearInterval(this.timer);
     },
     reset() {
-
+      this.pause();
+      this.$emit('resetClock', true);
+    },
+    completeTask() {
+      this.pause();
+      this.$emit('completeTask');
     },
   },
   watch: {
