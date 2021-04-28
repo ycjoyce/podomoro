@@ -37,6 +37,10 @@ export default {
       type: Object,
       required: false,
     },
+    clear: {
+      type: Boolean,
+      required: false,
+    },
   },
   data() {
     return {
@@ -56,6 +60,12 @@ export default {
         col: 'tomatoNums',
         val: num,
       });
+    },
+    clear(val) {
+      if (val) {
+        this.taskTitle = '';
+        this.tomatoNums = 0;
+      }
     },
   },
   created() {

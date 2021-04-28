@@ -9,6 +9,7 @@
       :tomatoAmount="10"
       @updateTaskTitle="setValue"
       @updateTomatoNums="setValue"
+      :clear="whetherClearPanel"
     >
       <template v-slot:buttons>
         <MyButton
@@ -42,6 +43,7 @@ export default {
           method: this.checkInputData,
         }
       ],
+      whetherClearPanel: false,
     };
   },
   methods: {
@@ -103,8 +105,7 @@ export default {
       this.finishAddingTask();
     },
     finishAddingTask() {
-      this.taskTitle = 0;
-      this.tomatoNums = '';
+      this.whetherClearPanel = true;
 
       this.$store.commit('triggerModal', {
         title: 'Success',
@@ -113,6 +114,7 @@ export default {
 
       setTimeout(() => {
         this.$store.commit('triggerModal', null);
+        this.whetherClearPanel = false;
       },1000);
     },
   },
