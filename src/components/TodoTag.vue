@@ -154,6 +154,13 @@ export default {
       });
     },
     updateTask(id, index) {
+      if (id === this.$store.state.curTask.id) {
+        this.$store.commit('setCurTask', {
+          col: 'completedCircles',
+          val: 0,
+        });
+      }
+
       let updatedTask = JSON.parse(JSON.stringify(this.taskList[index]));
       updatedTask.title = this.taskTitle[index];
       updatedTask.tomatoes = this.tomatoNums[index];
@@ -195,6 +202,8 @@ export default {
             },
           ],
         },
+      }).then(() => {
+        this.handleToggleEditPanel(this.editPanelOpened);
       });
     },
   },

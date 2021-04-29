@@ -1,6 +1,11 @@
 <template>
   <div class="main-circle-operate">
-    <div class="btn-group">
+    <div
+      :class="[
+        'btn-group',
+        { 'break': $store.state.curTask.status === 'break' }
+      ]"
+    >
       <button
         v-for="(btn, btnIndex) in operateBtns"
         :key="`btn-${btnIndex}`"
@@ -10,13 +15,13 @@
           { selected: btnSelected === btn }
         ]"
         :ref="`btn-${btn}`"
-        @click="handleOperate($event, btn)"
+        @click="handleOperate(btn)"
       ></button>
     </div>
 
     <p
       class="main-circle-complete"
-      @click="completeTask"
+      @click="completeTask(true)"
     >
       <img
         class="main-circle-complete-img"
@@ -25,54 +30,16 @@
       TASK COMPLETE
     </p>
   </div>
-  <!-- <div class="main-circle-operate">
-    <div class="btn-group">
-      <button
-        class="btn btn-play"
-        :class="{
-          break: $store.state.curState === 'break',
-          selected: curOperate === 'play',
-        }"
-        ref="play-btn"
-        @click="play"
-      ></button>
-
-      <button
-        class="btn btn-pause"
-        :class="{
-          break: $store.state.curState === 'break',
-          selected: curOperate === 'pause',
-        }"
-        ref="pause-btn"
-        @click="pause"
-      ></button>
-
-      <button
-        class="btn btn-reset"
-        :class="{
-          break: $store.state.curState === 'break',
-          selected: curOperate === 'reset',
-        }"
-        ref="reset-btn"
-        @click="reset"
-      ></button>
-    </div>
-
-    <p
-      class="main-circle-complete"
-      @click="complete"
-    >
-      <img
-        class="main-circle-complete-img"
-        :src="$store.state.images.complete"
-      >
-      TASK COMPLETE
-    </p>
-  </div> -->
 </template>
 
 <script>
 export default {
+  props: {
+    operate: {
+      type: String,
+      required: false,
+    },
+  },
   data() {
     return {
       operateBtns: [
@@ -83,13 +50,15 @@ export default {
     };
   },
   methods: {
-    handleOperate(e, type) {
+    handleOperate(type) {
       if (type === this.btnSelected) {
-        e.preventDefault();
+        window.event.preventDefault();
         return;
       }
 
-      this.btnSelected = type;
+      if (window.event) {
+        this.btnSelected = type;
+      }
 
       switch (type) {
         case 'play':
@@ -119,16 +88,27 @@ export default {
     reset() {
       this.pause();
       this.$emit('resetClock', true);
+      this.btnSelected = null;
+      this.$store.commit('setCurTask', {
+        col: 'completedCircles',
+        val: 0,
+      });
     },
-    completeTask() {
+    completeTask(directly) {
       this.pause();
-      this.$emit('completeTask');
+      this.$emit('completeTask', directly);
+      this.btnSelected = null;
     },
   },
   watch: {
     '$store.state.curTask.time': function(val) {
       if (val < 1) {
-        this.pause();
+        this.completeTask();
+      }
+    },
+    operate(val) {
+      if (val) {
+        this.handleOperate(val);
       }
     },
   },

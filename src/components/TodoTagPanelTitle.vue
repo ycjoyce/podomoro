@@ -13,13 +13,13 @@
 
       <ul class="content-title-count-list">
         <li
-          v-for="(tomato, tomatoIndex) in data.tomatoes"
-          :key="tomatoIndex"
+          v-for="tomato in data.tomatoes"
+          :key="tomato"
           class="content-title-count-item"
         >
           <span
             class="content-title-count-circle"
-            :class="{ completed: getCompletedCircle(data, tomatoIndex) }"
+            :class="{ completed: completedCircles(data.id, tomato) }"
           ></span>
         </li>
       </ul>
@@ -62,6 +62,19 @@ export default {
     editPanelOpened: {
       type: String,
       required: false,
+    },
+  },
+  computed: {
+    completedCircles() {
+      return (id, tomato) => {
+        if (!this.data.completed) {
+          if (id === this.$store.state.curTask.id) {
+            return tomato <= this.$store.state.curTask.completedCircles;
+          }
+          return false;
+        }
+        return this.getCompletedCircle(this.data, tomato);
+      }
     },
   },
   methods: {

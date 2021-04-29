@@ -14,16 +14,16 @@ module.exports = {
 	},
   computed: {
     completedCircleAmt() {
-      return (data) => {
-        if (!Array.isArray(data.progress) || data.progress.length < 1) {
+      return (task) => {
+        if (!Array.isArray(task.progress) || task.progress.length < 1) {
 					return 0;
 				}
-        return data.progress.reduce((a, e) => a + e.count, 0);
+        return task.progress.reduce((a, e) => a + e.count, 0);
       }
     },
     getCompletedCircle() {
-			return (data, tomatoIndex) => (
-        tomatoIndex + 1 <= this.completedCircleAmt(data)
+			return (task, tomato) => (
+        tomato <= this.completedCircleAmt(task)
       );
 		},
 		calArrSum() {

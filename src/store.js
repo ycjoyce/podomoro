@@ -41,6 +41,7 @@ export default new Vuex.Store({
       time: null,
       status: null,
     },
+    editCurTask: null,
   },
   getters: {
     taskNotCompleted(state) {
@@ -86,6 +87,9 @@ export default new Vuex.Store({
       for (let col in state.curTask) {
         state.curTask[col] = null;
       }
+    },
+    editCurTask(state, data) {
+      state.editCurTask = data;
     },
   },
   actions: {
@@ -139,19 +143,27 @@ export default new Vuex.Store({
         val: prevTime - 1,
       });
     },
-    setCurTaskCompletedCircles({ state, commit, dispatch }, { task }) {
-      const newCircleAmt = state.curTask.completedCircles + 1;
-      const progressData = {
-        date: new Date().toLocaleDateString(),
-        count: newCircleAmt,
-      };
+    setCurTaskCompletedCircles({ state, commit, dispatch }) {
+      // curTask的是要目前curTask + 1
+      // 更新整個task跟storage的是要操作array找當天的+1
+      let todayDate = new Date().toLocaleDateString();
+      let updatedTask = JSON.parse(JSON.stringify(state.todoTask.find((task) => task.id === state.curTask.id)));
+      let dateIndex = updatedTask.progress.findIndex((data) => data.date === todayDate);
 
-      let updatedTask = JSON.parse(JSON.stringify(task));
-      updatedTask.progress.push(progressData);
+      if (dateIndex < 0) {
+        updatedTask.progress.push({
+          date: new Date().toLocaleDateString(),
+          count: 1,
+        });
+      } else {
+        updatedTask.progress[dateIndex].count += 1;
+      }
+
+      const newCirclesForCurTask = state.curTask.completedCircles + 1;
 
       commit('setCurTask', {
         col: 'completedCircles',
-        val: newCircleAmt,
+        val: newCirclesForCurTask,
       });
 
       dispatch('operateTodoTask', {
@@ -159,12 +171,14 @@ export default new Vuex.Store({
         data: {
           task: updatedTask,
           dataToUpdateStorage: [{
-            targetId: task.id,
+            targetId: updatedTask.id,
             column: 'progress',
-            data: progressData,
+            data: updatedTask.progress.find((item) => item.date === todayDate),
           }],
         },
       });
+
+      console.log(state.todoTask.find((task) => task.id === state.curTask.id));
     },
   },
 });

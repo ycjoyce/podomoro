@@ -8,15 +8,22 @@
 
 				<clock
 					:task="taskToShow"
-					:perTomatoMin="0.1"
+					:perTomatoMin="perTomatoMin"
 					:reset="whetherResetClock"
-					@completeTask="completeTask"
+					@completeTask="handleComplete"
 				/>
 
 				<clock-operate
 					@resetClock="setClockStatus"
-					@completeTask="completeTask"
+					@completeTask="handleComplete"
+					:operate="operateBtns"
 				/>
+
+				<audio
+					v-if="hasMounted"
+					:src="ringtoneSrc"
+					ref="main-clock-audio"
+				></audio>
 			</div>
 		</div>
       
@@ -41,13 +48,21 @@ export default {
 	},
 	data() {
 		return {
+			hasMounted: false,
 			whetherResetClock: false,
+			perTomatoMin: 0.1,
+			operateBtns: null,
 		};
 	},
 	computed: {
 		taskToShow() {
 			return this.$store.getters.curTaskData || {};
 		},
+		ringtoneSrc() {
+      const status = this.$store.state.curTask.status;
+      const ringtoneId = this.$store.state.ringtoneIdSelected[status];
+      return this.$store.state.ringtoneAudio.find((ringtone) => ringtone.id === ringtoneId).src;
+    },
 	},
 	methods: {
 		setClockStatus(val) {
@@ -76,6 +91,78 @@ export default {
         },
       });
 		},
+		handleComplete(directly) {
+			if (directly) {
+				this.completeTask();
+				return;
+			}
+
+			const audio = this.$refs['main-clock-audio'];
+			audio.play();
+
+			switch (this.$store.state.curTask.status) {
+				case 'work':
+					this.openTaskCompleteModal(audio);
+					break;
+				case 'break':
+					this.openBreakCompleteModal(audio);
+					break;
+				default:
+					break;
+			}
+		},
+		openTaskCompleteModal(audio) {
+			this.$store.commit('triggerModal', {
+				title: 'Task Done',
+				content: 'You have done the task!',
+				button: [
+					{
+						title: 'Take a break',
+						type: 'primary',
+						method: () => {
+							this.closeModalAndRingtone(audio);
+							this.takeABreak();
+						},
+					},
+					{
+						title: 'Keep going',
+						type: 'secondary',
+						method: () => {
+							this.closeModalAndRingtone(audio);
+							this.completeTask();
+						},
+					}
+				],
+			});
+		},
+		openBreakCompleteModal(audio) {
+			this.$store.commit('triggerModal', {
+				title: 'Breaktime is over',
+				content: 'Would you like to start the next task?',
+				button: [
+					{
+						title: 'Start',
+						type: 'primary',
+						method: () => {
+							this.closeModalAndRingtone(audio);
+							this.completeTask();
+						},
+					},
+				],
+			});
+		},
+		closeModalAndRingtone(audio) {
+			audio.pause();
+			audio.currentTime = 0;
+			this.$store.commit('triggerModal', null);
+		},
+		takeABreak() {
+			this.$store.commit('setCurTask', {
+				col: 'status',
+				val: 'break',
+			});
+			this.whetherResetClock = this.perTomatoMin * 60;
+		},
 		setCurTask() {
 			if (this.$store.getters.taskNotCompleted.length < 1) {
 				this.$store.commit('clearCurTask');
@@ -95,18 +182,19 @@ export default {
 				},
 				{
 					col: 'completedCircles',
-					val: this.completedCircleAmt(curTask),
+					val: 0,
 				},
 			]);
 		},
-	},
-	mounted() {
-		this.setCurTask();
 	},
 	watch: {
 		'$store.getters.taskNotCompleted.length': function() {
 			this.setCurTask();
 		},
+	},
+	mounted() {
+		this.hasMounted = true;
+		this.setCurTask();
 	},
 }
 </script>

@@ -1,20 +1,22 @@
 <template>
   <div
     class="main-circle clock"
+    :class="[
+      'main-circle',
+      'clock',
+      { 'break': $store.state.curTask.status === 'break' },
+    ]"
   >
     <div class="main-circle-rotate"></div>
 
     <div class="main-circle-time">
-      <p class="main-circle-time-text">
+      <p
+        v-if="hasMounted"
+        class="main-circle-time-text"
+      >
         {{timeToShow}}
       </p>
     </div>
-
-    <audio
-      v-if="hasMounted"
-      :src="ringtoneSrc"
-      ref="main-clock-audio"
-    ></audio>
   </div>
   <!-- <div
     class="main-circle clock"
@@ -62,7 +64,7 @@ export default {
       required: true,
     },
     reset: {
-      type: Boolean,
+      type: [Boolean, Number],
       required: true,
     },
   },
@@ -77,11 +79,6 @@ export default {
     },
     timeToShow() {
       return this.formattedTime(this.$store.state.curTask.time);
-    },
-    ringtoneSrc() {
-      const status = this.$store.state.curTask.status;
-      const ringtoneId = this.$store.state.ringtoneIdSelected[status];
-      return this.$store.state.ringtoneAudio.find((ringtone) => ringtone.id === ringtoneId).src;
     },
   },
   methods: {
@@ -99,9 +96,17 @@ export default {
       }
     },
     reset(val) {
-      if (val) {
-        this.setCurTaskToOriginalTime();
+      if (!val) {
+        return;
       }
+      if (val === true) {
+        this.setCurTaskToOriginalTime();
+        return;
+      }
+      this.$store.commit('setCurTask', {
+        col: 'time',
+        val,
+      });
     },
     originalTime(val, oldVal) {
       if(oldVal && val) {
@@ -111,17 +116,19 @@ export default {
         });
       }
     },
-    '$store.state.curTask.time': function(val, oldVal) {
-      const unit = this.perTomatoMin * 60;
-      
-      if (val % unit === 0 && oldVal) {
-        this.$store.dispatch('setCurTaskCompletedCircles', {
-          task: this.task,
-        });
+    'task.id': function(val, oldVal) {
+      if (oldVal && val) {
+        this.setCurTaskToOriginalTime();
       }
+    },
+    '$store.state.curTask.time': function(val) {
+      const unit = this.perTomatoMin * 60;
 
-      if (val < 1) {
-        this.$emit('completeTask');
+      if (this.$store.state.curTask.status === 'break') {
+        return;
+      }
+      if (val % unit === 0 && val !== this.originalTime) {
+        this.$store.dispatch('setCurTaskCompletedCircles');
       }
     },
   },
