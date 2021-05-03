@@ -144,8 +144,6 @@ export default new Vuex.Store({
       });
     },
     setCurTaskCompletedCircles({ state, commit, dispatch }) {
-      // curTask的是要目前curTask + 1
-      // 更新整個task跟storage的是要操作array找當天的+1
       let todayDate = new Date().toLocaleDateString();
       let updatedTask = JSON.parse(JSON.stringify(state.todoTask.find((task) => task.id === state.curTask.id)));
       let dateIndex = updatedTask.progress.findIndex((data) => data.date === todayDate);
@@ -177,8 +175,6 @@ export default new Vuex.Store({
           }],
         },
       });
-
-      console.log(state.todoTask.find((task) => task.id === state.curTask.id));
     },
   },
 });

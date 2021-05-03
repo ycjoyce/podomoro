@@ -6,8 +6,18 @@
       'clock',
       { 'break': $store.state.curTask.status === 'break' },
     ]"
+    :style="{
+      backgroundColor: circleAllColor,
+      backgroundImage: circleRightColor,
+    }"
   >
-    <div class="main-circle-rotate"></div>
+    <div
+      class="main-circle-rotate"
+      :style="{
+        transform: `rotate(${rotateDeg}deg)`,
+        backgroundColor: rotateColor,
+      }"
+    ></div>
 
     <div class="main-circle-time">
       <p
@@ -18,35 +28,6 @@
       </p>
     </div>
   </div>
-  <!-- <div
-    class="main-circle clock"
-    ref="main-circle"
-    :class="{ break: $store.state.curState === 'break' }"
-    :style="{
-      backgroundColor: $store.state.themeColor.bgc,
-      backgroundImage: `linear-gradient(to right, transparent 50%, ${$store.state.themeColor[$store.state.curState]} 0)`,
-    }"
-  >
-    <div
-      class="main-circle-rotate"
-      :style="{
-        border: `2px solid blue`,
-        transform: `rotate(${$store.state.curDegree}deg)`,
-        backgroundColor: $store.getters.coloredRotate,
-      }"
-    ></div>
-
-    <div class="main-circle-time">
-      <p class="main-circle-time-text">
-        {{$store.state.curTime}}
-      </p>
-    </div>
-
-    <audio
-      :src="getRingtone"
-      ref="main-clock-audio"
-    ></audio>
-  </div> -->
 </template>
 
 <script>
@@ -71,14 +52,49 @@ export default {
   data() {
     return {
       hasMounted: false,
+      clockColor: {
+        bgc: '#ACACAC',
+        work: '#EA5548',
+        break: '#B5E254',
+      },
+      secondHalf: false,
     };
   },
   computed: {
     originalTime() {
-      return Math.round(this.task.tomatoes * this.perTomatoMin * 60);
+      if (this.$store.state.curTask.status === 'work') {
+        return Math.round(this.task.tomatoes * this.perTomatoMin * 60);
+      }
+      return Math.round(this.perTomatoMin * 60);
     },
     timeToShow() {
       return this.formattedTime(this.$store.state.curTask.time);
+    },
+    calDeg() {
+      const perSecDeg = 360 / this.originalTime;
+      return (this.originalTime - this.$store.state.curTask.time) * perSecDeg;
+    },
+    rotateDeg() {
+      if (this.calDeg <= 180) {
+        return this.calDeg;
+      }
+      return this.calDeg - 180;
+    },
+    circleAllColor() {
+      return this.clockColor['bgc'];
+    },
+    circleRightColor() {
+      return `linear-gradient(
+        to right,
+        transparent 50%,
+        ${this.clockColor[this.$store.state.curTask.status]} 0)
+      `;
+    },
+    rotateColor() {
+      if (this.secondHalf) {
+        return this.clockColor[this.$store.state.curTask.status];
+      }
+      return this.clockColor['bgc'];
     },
   },
   methods: {
@@ -130,6 +146,9 @@ export default {
       if (val % unit === 0 && val !== this.originalTime) {
         this.$store.dispatch('setCurTaskCompletedCircles');
       }
+    },
+    calDeg(val) {
+      this.secondHalf = !(val <= 180);
     },
   },
   mounted() {
