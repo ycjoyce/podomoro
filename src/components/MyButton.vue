@@ -3,8 +3,8 @@
     class="my-button"
     :class="[
       type,
-      borderStyle ? 'border' : '',
-      pos ? `pos-${pos}` : ''
+      { 'border': borderStyle },
+      pos ? `pos-${pos}` : '',
     ]"
     @click="method"
   >

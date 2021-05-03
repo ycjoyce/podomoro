@@ -1,7 +1,5 @@
 <template>
-  <main
-		class="main-area"
-	>
+  <main class="main-area">
 		<component :is="checkType"></component>
   </main>
 </template>

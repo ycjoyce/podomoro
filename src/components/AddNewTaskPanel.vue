@@ -36,13 +36,6 @@ export default {
     return {
       taskTitle: '',
       tomatoNums: 0,
-      editPanelButtons: [
-        {
-          title: 'ADD TASK',
-          type: 'primary',
-          method: this.checkInputData,
-        }
-      ],
       whetherClearPanel: false,
     };
   },
@@ -52,40 +45,31 @@ export default {
     },
     checkInputData() {
       if (!this.taskTitle) {
-        this.$store.commit('triggerModal', {
-          title: 'Error',
-          content: 'Please enter the task title!',
-          button: [
-            {
-              title: 'OK',
-              type: 'primary',
-              method: () => {
-                this.$store.commit('triggerModal', null);
-              },
-            }
-          ],
-        });
+        this.triggerErrorModal('Please enter the task title!');
         return;
       }
 
       if (this.tomatoNums < 1) {
-        this.$store.commit('triggerModal', {
-          title: 'Error',
-          content: 'Please estimate the amount of tomatoes!',
-          button: [
-            {
-              title: 'OK',
-              type: 'primary',
-              method: () => {
-                this.$store.commit('triggerModal', null);
-              },
-            }
-          ],
-        });
+        this.triggerErrorModal('Please estimate the amount of tomatoes!');
         return;
       }
 
       this.addTask();
+    },
+    triggerErrorModal(msg) {
+      this.$store.commit('triggerModal', {
+        title: 'Error',
+        content: msg,
+        button: [
+          {
+            title: 'OK',
+            type: 'primary',
+            method: () => {
+              this.$store.commit('triggerModal', null);
+            },
+          }
+        ],
+      });
     },
     addTask() {
       const data = {
@@ -93,7 +77,6 @@ export default {
         title: this.taskTitle,
         tomatoes: this.tomatoNums,
         completed: false,
-        show: true,
         progress: [],
       };
 

@@ -43,7 +43,7 @@ export default {
 	},
   computed: {
     paragraphSplitting() {
-      return function(content) {
+      return (content) => {
 				return `
 					<p class="modal-content">
 						${content.split('\n').join('</p><p class="modal-content">')}

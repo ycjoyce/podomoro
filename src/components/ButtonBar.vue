@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     getPageIcon() {
-      return function(page) {
+      return (page) => {
         const color = this.$store.state.curPage === page ? 'red' : 'white';
         return require(`@/assets/img/${page}_${color}.svg`);
       }
