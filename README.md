@@ -55,7 +55,7 @@ Podomoro 是一個基於 Vue.js 建構而成的番茄鐘網站，以 Vuex 管理
 ## 應用介面
 - 時鐘
 ![時鐘 - 沒有任務時](https://i.imgur.com/zcf6Cwz.png)
-![時鐘 - 有任務時](https://i.imgur.com/Rpx5xll.png)
+![時鐘 - 有任務時](https://i.imgur.com/fs53YWq.png)
 
 - 操作介面 - 添加新任務
 ![操作介面 - 添加新任務](https://i.imgur.com/lfZq25U.png)
