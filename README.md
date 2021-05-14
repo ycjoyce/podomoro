@@ -1,24 +1,75 @@
-# podomoro2
+# Podomoro 番茄鐘網站
+Podomoro 是一個基於 Vue.js 建構而成的番茄鐘網站，以 Vuex 管理狀態。UI 皆以 SCSS 遵循 OOCSS 手刻而成，並支援 RWD。
 
-## Project setup
-```
-npm install
-```
+## 線上演示
+[Demo](https://ycjoyce.github.io/podomoro/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 功能地圖
+1. 時鐘
+- 沒有任務時可以看到提醒請先添加任務的提示
+- 有任務時可以看到任務的詳細資訊，如任務名稱、番茄數量、目前時間
+- 可以操作任務開始/暫停/重來
+- 可以操作直接將任務設為完成
+- 開始時可以看到時間倒數
+- 隨著時間倒數可以看到目前完成的番茄數量
+- 任務完成時可以選擇休息或繼續執行下一個任務
+- 任務完成時可以自動播放在鈴聲操作面板中設定的鈴聲
 
-### Compiles and minifies for production
-```
-npm run build
-```
+2. 操作介面
+- 可以點擊切換不同操作介面
+- 可以開啟收合操作介面
 
-### Lints and fixes files
-```
-npm run lint
-```
+3. 操作介面 - 添加新任務
+- 可以填寫任務名稱並選擇番茄數量，以添加新任務
+- 可以提示是否成功添加新任務
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+4. 操作介面 - 任務清單
+- 可以切換查看代辦任務即已完成任務
+- 沒有任務時可以看到提醒請先添加任務的提示
+- 可以點擊開合編輯面板針對特定任務做編輯
+  1. 代辦任務
+      - 可以看到任務名稱及待完成番茄數量
+      - 可以編輯任務名稱、番茄數量並儲存更新
+      - 可以刪除任務
+  2. 已完成任務
+      - 可以看到任務名稱及已完成番茄數量
+      - 可以重新執行任務
+      - 可以刪除任務
+
+5. 操作介面 - 分析報告
+- 可以查看當日及該週分別累積的已完成番茄數量
+- 可以切換查看不同週的累積已完成番茄數量
+
+6. 操作介面 - 鈴聲
+- 可以切換查看工作及休息的鈴聲列表
+- 可以播放/暫停鈴聲
+- 可以選擇設定鈴聲
+
+## 使用技術
+- Vue.js / Vuex / Vue cli
+- Javascript (ES6+)
+- OOCSS
+- SCSS
+- ESLint
+
+## 應用介面
+- 時鐘
+![時鐘 - 沒有任務時](https://i.imgur.com/zcf6Cwz.png)
+![時鐘 - 有任務時](https://i.imgur.com/Rpx5xll.png)
+
+- 操作介面 - 添加新任務
+![操作介面 - 添加新任務](https://i.imgur.com/lfZq25U.png)
+![操作介面 - 添加新任務 - 提示是否成功添加](https://i.imgur.com/wnwrkK7.png)
+
+- 操作介面 - 任務清單
+![操作介面 - 任務清單](https://i.imgur.com/KodppuJ.png)
+
+- 操作介面 - 分析報告
+![操作介面 - 分析報告](https://i.imgur.com/sS2FdFr.png)
+
+- 操作介面 - 鈴聲
+![操作介面 - 鈴聲](https://i.imgur.com/lZF6128.png)
+
+## 聲明
+- UI 設計圖稿來自 The F2E 2nd（設計師：Daphne）
+- 本作品內圖片、內容等，純粹為個人練習使用，不做任何商業用途
