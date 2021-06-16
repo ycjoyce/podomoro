@@ -6,7 +6,8 @@
       class="chart-item"           
     >
       <div class="chart-pies">
-        <span class="chart-pies-amount"
+        <span
+          class="chart-pies-amount"
           v-if="getProgressAmount(week[m - 1]) > 0"
         >
           {{getProgressAmount(week[m - 1])}}
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-import mixin from '../mixin';
+import mixin from '@/mixin';
 
 export default {
   mixins: [mixin],  
@@ -43,5 +44,5 @@ export default {
       required: true,
     },
   },
-}
+};
 </script>

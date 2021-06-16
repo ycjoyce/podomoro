@@ -1,8 +1,8 @@
 <template>
   <ul>
     <li
-      v-for="(ringtone, ringtoneIndex) in data.list"
-      :key="ringtoneIndex"
+      v-for="ringtone in data.list"
+      :key="ringtone.id"
       class="content-item"
     >
       <p class="content-title">
@@ -35,11 +35,13 @@
       </audio>
 
       <button
-        class="content-btn-play"
-        :class="{
-          toPlay: curPlayId !== `${lowerCaseTitle}-${ringtone.id}`,
-          toPause: curPlayId === `${lowerCaseTitle}-${ringtone.id}`,
-        }"
+        :class="[
+          'content-btn-play',
+          {
+            toPlay: curPlayId !== `${lowerCaseTitle}-${ringtone.id}`,
+            toPause: curPlayId === `${lowerCaseTitle}-${ringtone.id}`,
+          }
+        ]"
         @click="toggleRingtone(`${lowerCaseTitle}-${ringtone.id}`)"
       ></button>
     </li>
@@ -103,5 +105,5 @@ export default {
       this.curPlayId = null;
     },
   },
-}
+};
 </script>

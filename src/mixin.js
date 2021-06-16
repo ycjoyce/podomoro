@@ -19,7 +19,7 @@ module.exports = {
 					return 0;
 				}
         return task.progress.reduce((a, e) => a + e.count, 0);
-      }
+      };
     },
     getCompletedCircle() {
 			return (task, tomato) => (
@@ -32,7 +32,7 @@ module.exports = {
           return 0;
         }
         return arr.reduce((a, e) => a + e, 0);
-      }
+      };
     },
 		getProgressAmount() {
       return (dateIns) => {
@@ -43,7 +43,7 @@ module.exports = {
           task.progress.find((el) => el.date === date).count
         ));
         return this.calArrSum(amountArr);
-      }
+      };
     },
 		formattedDate() {
       return (dateIns) => {
@@ -54,14 +54,14 @@ module.exports = {
 					date: `${month}/${day}`,
 					weekday,
 				};
-      }
+      };
     },
     formattedTime() {
       return (sec) => {
         const mins = Math.floor(sec / 60);
         const secs = sec - mins * 60;
         return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-      }
+      };
     },
   },
   methods: {

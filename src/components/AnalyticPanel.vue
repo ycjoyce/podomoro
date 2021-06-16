@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import AnalyticNumberList from './AnalyticNumberList';
-import AnalyticChartList from './AnalyticChartList';
-import MyButton from './MyButton';
-import mixin from '../mixin';
+import mixin from '@/mixin';
+import AnalyticNumberList from '@/components/AnalyticNumberList';
+import AnalyticChartList from '@/components/AnalyticChartList';
+import MyButton from '@/components/MyButton';
 
 export default {
   mixins: [mixin],
@@ -122,7 +122,7 @@ export default {
   created() {
     this.wholeWeek = this.originalWeekDates;
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
