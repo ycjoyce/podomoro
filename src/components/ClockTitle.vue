@@ -21,10 +21,10 @@
         class="title-count-item"
       >
         <span
-          class="title-count-circle"
-          :class="{
-            completed: n <= $store.state.curTask.completedCircles
-          }"
+          :class="[
+            'title-count-circle',
+            { completed: n <= $store.state.curTask.completedCircles }
+          ]"
         ></span>
       </li>
     </ul>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import mixin from '../mixin';
+import mixin from '@/mixin';
 
 export default {
   mixins: [mixin],
@@ -42,5 +42,5 @@ export default {
       required: true,
     },
   },
-}
+};
 </script>

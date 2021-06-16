@@ -1,12 +1,13 @@
 <template>
   <main class="main-area">
-		<component :is="checkType"></component>
+		<component :is="checkType"
+    ></component>
   </main>
 </template>
 
 <script>
-import PendingMain from './PendingMain';
-import ClockMain from './ClockMain';
+import PendingMain from '@/components/PendingMain';
+import ClockMain from '@/components/ClockMain';
 
 export default {
   components: {
@@ -18,5 +19,5 @@ export default {
       return this.$store.getters.taskNotCompleted.length > 0 ? 'ClockMain' : 'PendingMain';
     },
   },
-}
+};
 </script>

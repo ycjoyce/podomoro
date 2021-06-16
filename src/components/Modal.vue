@@ -16,8 +16,8 @@
 				v-if="data.button"
 			>
 				<MyButton 
-					v-for="(btn, btnIndex) in data.button"
-					:key="btnIndex"
+					v-for="btn in data.button"
+					:key="btn.title"
 					:title="btn.title"
 					:type="btn.type"
 					:method="btn.method"
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import MyButton from './MyButton';
+import MyButton from '@/components/MyButton';
 
 export default {
   props: {
@@ -49,7 +49,7 @@ export default {
 						${content.split('\n').join('</p><p class="modal-content">')}
 					</p>
 				`;
-			}
+			};
     },
   },
 }

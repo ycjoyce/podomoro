@@ -7,8 +7,8 @@
       ]"
     >
       <button
-        v-for="(btn, btnIndex) in operateBtns"
-        :key="`btn-${btnIndex}`"
+        v-for="btn in operateBtns"
+        :key="btn"
         :class="[
           'btn',
           `btn-${btn}`,
@@ -34,12 +34,6 @@
 
 <script>
 export default {
-  props: {
-    operate: {
-      type: String,
-      required: false,
-    },
-  },
   data() {
     return {
       operateBtns: [
@@ -60,19 +54,11 @@ export default {
         this.btnSelected = type;
       }
 
-      switch (type) {
-        case 'play':
-          this.play();
-          break;
-        case 'pause':
-          this.pause();
-          break;
-        case 'reset':
-          this.reset();
-          break;
-        default:
-          break;
+      if (!['play', 'pause', 'reset'].includes(type)) {
+        return;
       }
+
+      this[type]();
     },
     play() {
       this.$emit('resetClock', false);
@@ -106,11 +92,6 @@ export default {
         this.completeTask();
       }
     },
-    operate(val) {
-      if (val) {
-        this.handleOperate(val);
-      }
-    },
   },
-}
+};
 </script>

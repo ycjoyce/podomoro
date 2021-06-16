@@ -16,7 +16,6 @@
 				<clock-operate
 					@resetClock="setClockStatus"
 					@completeTask="handleComplete"
-					:operate="operateBtns"
 				/>
 
 				<audio
@@ -34,10 +33,10 @@
 </template>
 
 <script>
-import ClockTitle from './ClockTitle';
-import Clock from './Clock';
-import ClockOperate from './ClockOperate';
-import mixin from '../mixin';
+import ClockTitle from '@/components/ClockTitle';
+import Clock from '@/components/Clock';
+import ClockOperate from '@/components/ClockOperate';
+import mixin from '@/mixin';
 
 export default {
 	mixins: [mixin],
@@ -51,7 +50,6 @@ export default {
 			hasMounted: false,
 			whetherResetClock: false,
 			perTomatoMin: 0.1,
-			operateBtns: null,
 		};
 	},
 	computed: {
@@ -196,5 +194,5 @@ export default {
 		this.hasMounted = true;
 		this.setCurTask();
 	},
-}
+};
 </script>

@@ -7,15 +7,17 @@
       :data="$store.state.modalData"
       v-if="$store.state.modalData"
     />
+
     <MainArea/>
+
     <AsideArea/>
   </div>
 </template>
 
 <script>
-import Modal from './components/Modal';
-import MainArea from './components/MainArea';
-import AsideArea from './components/AsideArea';
+import Modal from '@/components/Modal';
+import MainArea from '@/components/MainArea';
+import AsideArea from '@/components/AsideArea';
 
 export default {
   components: {
@@ -60,7 +62,7 @@ export default {
   beforeDestroy() {
     window.removeEventListener('resize', this.getWindowHeight);
   },
-}
+};
 </script>
 
 <style lang="scss">

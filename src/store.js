@@ -4,7 +4,7 @@ import {
   setStorage,
   deleteDataInStorage,
   updateStorage,
-} from './assets/js/util';
+} from '@/assets/js/util';
 
 Vue.use(Vuex);
 
@@ -77,6 +77,9 @@ export default new Vuex.Store({
     },
     clearCurTask(state) {
       for (let col in state.curTask) {
+        if (!Object.prototype.hasOwnProperty.call(state.curTask, col)) {
+          continue;
+        }
         state.curTask[col] = null;
       }
     },

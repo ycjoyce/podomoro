@@ -1,13 +1,12 @@
 <template>
   <div
-    class="main-circle clock"
     :class="[
       'main-circle',
       'clock',
       { 'break': $store.state.curTask.status === 'break' },
     ]"
     :style="{
-      backgroundColor: circleAllColor,
+      backgroundColor: clockColor['bgc'],
       backgroundImage: circleRightColor,
     }"
   >
@@ -31,7 +30,7 @@
 </template>
 
 <script>
-import mixin from '../mixin';
+import mixin from '@/mixin';
 
 export default {
   mixins: [mixin],
@@ -79,9 +78,6 @@ export default {
         return this.calDeg;
       }
       return this.calDeg - 180;
-    },
-    circleAllColor() {
-      return this.clockColor['bgc'];
     },
     circleRightColor() {
       return `linear-gradient(
@@ -154,5 +150,5 @@ export default {
   mounted() {
     this.hasMounted = true;
   },
-}
+};
 </script>

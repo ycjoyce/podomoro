@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import TagList from './TagList';
+import TagList from '@/components/TagList';
 
 export default {
   components: {
@@ -31,5 +31,5 @@ export default {
 			},
 		};
 	},
-}
+};
 </script>
