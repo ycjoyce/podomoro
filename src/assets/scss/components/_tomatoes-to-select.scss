@@ -16,7 +16,7 @@
   &-btn {
     width: 25px;
     height: 25px;
-    flex: 1 1 25px;
+    flex: 0 1 25px;
     @include initial-button(transparent);
     @include set-background-image(contain);
     background-image: url('~@/assets/img/tomato_small_gray.svg');

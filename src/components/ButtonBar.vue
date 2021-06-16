@@ -1,11 +1,11 @@
 <template>
   <div
     class="button-bar"
-    :class="{ 'to-close': !$store.state.panelShow }"   
+    :class="{ 'to-close': !panelShow }"   
   >
     <button
-			v-for="(page, index) in pages"
-			:key="index"
+			v-for="page in pages"
+			:key="page"
 			class="btn-change-page"
 			:data-type="page"
 			@click="switchPage(page)"
@@ -15,7 +15,7 @@
 
     <button
 			class="btn-toggle-open" 
-			:class="{ 'to-close': !$store.state.panelShow }"
+			:class="{ 'to-close': !panelShow }"
 			@click="togglePanel(buttonStatus)"
     >
 			<img
@@ -33,6 +33,10 @@
 
 <script>
 export default {
+  props: {
+    curPage: String,
+    panelShow: Boolean,
+  },
   data() {
     return {
       pages: [
@@ -44,23 +48,19 @@ export default {
   computed: {
     getPageIcon() {
       return (page) => {
-        const color = this.$store.state.curPage === page ? 'red' : 'white';
+        const color = this.curPage === page ? 'red' : 'white';
         return require(`@/assets/img/${page}_${color}.svg`);
-      }
+      };
     },
   },
   methods: {
     switchPage(page) {
-      this.$store.commit('switchPage', page);
+      this.$emit('switchPage', page);
     },
     togglePanel(buttonStatus) {
-      if (buttonStatus !== 'to-close' && buttonStatus !== 'to-open') {
-				return;
-			}
-			const	oppositeStatus =  buttonStatus === 'to-close' ? 'to-open' : 'to-close';
-			this.$store.commit('togglePanel', buttonStatus);
-			this.buttonStatus = oppositeStatus;
+      this.$emit('togglePanel', !(buttonStatus === 'to-close'));
+			this.buttonStatus = buttonStatus === 'to-close' ? 'to-open' : 'to-close';
     }
   },
-}
+};
 </script>

@@ -1,19 +1,22 @@
 <template>
-	<div
-		class="aside-panel"
-		v-show="$store.state.panelShow"
-	>
-		<component :is="curPanel"></component>
+	<div class="aside-panel">
+    <transition name="fade" mode="out-in">
+      <component :is="curPanel"
+      ></component>
+    </transition>
 	</div>
 </template>
 
 <script>
-import AddNewTaskPanel from './AddNewTaskPanel';
-import TaskListPanel from './TaskListPanel';
-import AnalyticPanel from './AnalyticPanel';
-import RingtonePanel from './RingtonePanel';
+import AddNewTaskPanel from '@/components/AddNewTaskPanel';
+import TaskListPanel from '@/components/TaskListPanel';
+import AnalyticPanel from '@/components/AnalyticPanel';
+import RingtonePanel from '@/components/RingtonePanel';
 
 export default {
+  props: {
+    curPage: String,
+  },
   components:{
 		AddNewTaskPanel,
 		TaskListPanel,
@@ -28,8 +31,8 @@ export default {
         analysis: 'AnalyticPanel',
         ringtone: 'RingtonePanel',
       };
-      return panelMap[this.$store.state.curPage];
+      return panelMap[this.curPage];
     },
   },
-}
+};
 </script>

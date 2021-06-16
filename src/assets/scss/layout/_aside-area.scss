@@ -18,3 +18,24 @@
     flex-grow: 1;
   }
 }
+
+.aside-panel-enter-active,
+.aside-panel-leave-active {
+  transition: all .5s;
+}
+
+.aside-panel-enter,
+.aside-panel-leave-to {
+  width: 0;
+  opacity: 0;
+}
+
+.aside-panel-enter-to,
+.aside-panel-leave {
+  width: calc(50vw - 80px);
+  opacity: 1;
+
+  @include rwd(mobile) {
+    width: 100vw;
+  }
+}
