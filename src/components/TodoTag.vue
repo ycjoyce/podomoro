@@ -2,7 +2,7 @@
   <ul>
     <li
       v-for="(item, itemIndex) in taskList"
-      :key="itemIndex"
+      :key="item.id"
       class="content-item"
     >
       <TodoTagPanelTitle
@@ -42,7 +42,7 @@
 
       <div
         class="content-panel"
-        v-else
+        v-else-if="data.title === 'DONE'"
         v-show="editPanelOpened === `${data.title}-${itemIndex}`"
       >
         <div class="content-panel-btn-area">
@@ -65,11 +65,13 @@
 </template>
 
 <script>
-import MyButton from './MyButton';
-import TodoTagPanelTitle from './TodoTagPanelTitle';
-import EditPanel from './EditPanel';
+import mixin from '@/mixin';
+import MyButton from '@/components/MyButton';
+import TodoTagPanelTitle from '@/components/TodoTagPanelTitle';
+import EditPanel from '@/components/EditPanel';
 
 export default {
+  mixins: [mixin],
   components: {
     MyButton,
     TodoTagPanelTitle,
@@ -139,19 +141,7 @@ export default {
                       'Please enter the task title!' :
                       'Please estimate the amount of tomatoes!';
 
-      this.$store.commit('triggerModal',{ 
-        title: 'Error',
-        content,
-        button: [
-          {
-            title: 'OK',
-            type: 'primary',
-            method: () => {
-              this.$store.commit('triggerModal', null);
-            },
-          }
-        ],
-      });
+      this.triggerErrorModal(content);
     },
     updateTask(id, index) {
       if (id === this.$store.state.curTask.id) {
@@ -207,5 +197,5 @@ export default {
       });
     },
   },
-}
+};
 </script>

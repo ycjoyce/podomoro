@@ -3,6 +3,7 @@
 		<h2 class="title-primary">
 			TASK LIST
 		</h2>
+		
 		<TagList
 			:data="tagListData"
 		/>
@@ -10,7 +11,7 @@
 </template>
 
 <script>
-import TagList from './TagList';
+import TagList from '@/components/TagList';
 
 export default {
   components: {
@@ -33,5 +34,5 @@ export default {
       };
     },
   },
-}
+};
 </script>

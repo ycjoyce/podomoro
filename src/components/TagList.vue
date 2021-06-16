@@ -2,11 +2,13 @@
   <div>
     <ul class="tags-list">
 			<li
-				v-for="(tag, tagIndex) in data.tags"
-				:key="tagIndex"
+				v-for="tag in data.tags"
+				:key="tag.title"
+        :class="[
+          'tags-item',
+          { active: tag.title === curTag }
+        ]"
 				@click="selectTag(tag.title)"
-				class="tags-item"
-				:class="{ active: tag.title === curTag }"
 			>
 				{{tag.title}}
 			</li>
@@ -21,7 +23,7 @@
 
       <RingtoneTag
         class="content-list ringtone"
-        v-else-if="data.type === 'ringtoneList'"
+        v-else-if="data.type === 'ringtoneList' && getTagData(curTag).list.length > 0"
         :data="getTagData(curTag)"
       />
 
@@ -29,17 +31,17 @@
 				v-else
 				class="tags-panel-empty"
 			>
-				You don't have any task now,
+				You don't have any {{itemName}} now,
 				<br>
-				please add task first!
+				please add {{itemName}} first!
 			</p>
     </div>
   </div>
 </template>
 
 <script>
-import TodoTag from './TodoTag';
-import RingtoneTag from './RingtoneTag';
+import TodoTag from '@/components/TodoTag';
+import RingtoneTag from '@/components/RingtoneTag';
 
 export default {
   components: {
@@ -70,6 +72,15 @@ export default {
         ))
       );
     },
+    itemName() {
+      if (this.data.type === 'todoList') {
+        return 'task';
+      }
+      if (this.data.type === 'ringtoneList') {
+        return 'ringtone';
+      }
+      return 'item';
+    },
   },
-}
+};
 </script>

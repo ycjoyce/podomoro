@@ -64,4 +64,21 @@ module.exports = {
       }
     },
   },
+  methods: {
+    triggerErrorModal(msg) {
+      this.$store.commit('triggerModal', {
+        title: 'Error',
+        content: msg,
+        button: [
+          {
+            title: 'OK',
+            type: 'primary',
+            method: () => {
+              this.$store.commit('triggerModal', null);
+            },
+          }
+        ],
+      });
+    },
+  },
 };

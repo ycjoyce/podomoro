@@ -24,10 +24,12 @@
 </template>
 
 <script>
+import mixin from '@/mixin';
 import EditPanel from '@/components/EditPanel';
 import MyButton from '@/components/MyButton';
 
 export default {
+  mixins: [mixin],
   components: {
     EditPanel,
     MyButton,
@@ -55,21 +57,6 @@ export default {
       }
 
       this.addTask();
-    },
-    triggerErrorModal(msg) {
-      this.$store.commit('triggerModal', {
-        title: 'Error',
-        content: msg,
-        button: [
-          {
-            title: 'OK',
-            type: 'primary',
-            method: () => {
-              this.$store.commit('triggerModal', null);
-            },
-          }
-        ],
-      });
     },
     addTask() {
       const data = {

@@ -1,11 +1,13 @@
 <template>
   <div class="content-title-box">
     <p
-      class="content-title"
-      :class="{
-        done: type === 'DONE',
-        active: data.id === $store.state.curTask,
-      }"
+      :class="[
+        'content-title',
+        {
+          done: type === 'DONE',
+          active: data.id === $store.state.curTask,
+        }
+      ]"
     >
       <span class="content-title-text">
         {{data.title}}
@@ -18,18 +20,20 @@
           class="content-title-count-item"
         >
           <span
-            class="content-title-count-circle"
-            :class="{ completed: completedCircles(data.id, tomato) }"
+            :class="[
+              'content-title-count-circle',
+              { completed: completedCircles(data.id, tomato) }
+            ]"
           ></span>
         </li>
       </ul>
     </p>
 
     <button
-      class="content-title-open-panel"
-      :class="{
-        'to-close': editPanelOpened === `${type}-${index}`
-      }"
+      :class="[
+        'content-title-open-panel',
+        { 'to-close': editPanelOpened === `${type}-${index}` }
+      ]"
       @click="toggleEditPanel(`${type}-${index}`)"
     >
       <span
@@ -42,7 +46,7 @@
 </template>
 
 <script>
-import mixin from '../mixin';
+import mixin from '@/mixin';
 
 export default {
   mixins: [mixin],
@@ -59,10 +63,7 @@ export default {
       type: Number,
       required: true,
     },
-    editPanelOpened: {
-      type: String,
-      required: false,
-    },
+    editPanelOpened: String,
   },
   computed: {
     completedCircles() {
@@ -74,7 +75,7 @@ export default {
           return false;
         }
         return this.getCompletedCircle(this.data, tomato);
-      }
+      };
     },
   },
   methods: {
@@ -82,5 +83,5 @@ export default {
       this.$emit('toggleEditPanel', index);
     },
   },
-}
+};
 </script>
