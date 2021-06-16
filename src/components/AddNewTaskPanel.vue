@@ -7,9 +7,9 @@
     <EditPanel
       pos="add-new-task"
       :tomatoAmount="10"
+      :clear="whetherClearPanel"
       @updateTaskTitle="setValue"
       @updateTomatoNums="setValue"
-      :clear="whetherClearPanel"
     >
       <template v-slot:buttons>
         <MyButton
@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import EditPanel from './EditPanel';
-import MyButton from './MyButton';
+import EditPanel from '@/components/EditPanel';
+import MyButton from '@/components/MyButton';
 
 export default {
   components: {
@@ -40,7 +40,7 @@ export default {
     };
   },
   methods: {
-    setValue({col, val}) {
+    setValue({ col, val }) {
       this[col] = val;
     },
     checkInputData() {
@@ -101,5 +101,5 @@ export default {
       },1000);
     },
   },
-}
+};
 </script>

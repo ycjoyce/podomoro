@@ -25,18 +25,12 @@ export default {
       type: String,
       required: true,
     },
-    small: {
-      type: Boolean,
-      required: false,
-    },
     modelValue: {
       type: String,
       required: true,
     },
-    pos: {
-      type: String,
-      required: false,
-    },
+    small: Boolean,
+    pos: String,
   },
   computed: {
     value: {
@@ -48,7 +42,7 @@ export default {
       },
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

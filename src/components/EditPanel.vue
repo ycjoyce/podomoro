@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import TextInput from './TextInput';
-import TomatoesToSelect from './TomatoesToSelect';
+import TextInput from '@/components/TextInput';
+import TomatoesToSelect from '@/components/TomatoesToSelect';
 
 export default {
   components: {
@@ -25,21 +25,12 @@ export default {
     TomatoesToSelect,
   },
   props: {
-    pos: {
-      type: String,
-      required: false,
-    },
+    pos: String,
+    defaultValue: Object,
+    clear: Boolean,
     tomatoAmount: {
       type: Number,
       required: true,
-    },
-    defaultValue: {
-      type: Object,
-      required: false,
-    },
-    clear: {
-      type: Boolean,
-      required: false,
     },
   },
   data() {
@@ -80,5 +71,5 @@ export default {
       this.tomatoNums = this.defaultValue.tomatoes;
     }
   },
-}
+};
 </script>

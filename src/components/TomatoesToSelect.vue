@@ -2,7 +2,7 @@
 	<div>
 		<h3
 			class="title-secondary"
-			:class="{ small: small }"
+			:class="{ small }"
 		>
 			ESTIMATED TOMATO
 		</h3>
@@ -30,27 +30,18 @@ export default {
 			type: Number,
 			required: true,
 		},
-		dataId: {
-			type: Number,
-			required: false,
-		},
 		tomatoSelected: {
 			type: Number,
 			required: true,
 		},
-		small: {
-      type: Boolean,
-      required: false,
-    },
-		pos: {
-      type: String,
-      required: false,
-    },
+		dataId: Number,
+		small: Boolean,
+		pos: String,
 	},
 	methods: {
 		selectTomato(number) {
 			this.$emit('update:tomatoSelected', number);
 		},
 	},
-}
+};
 </script>

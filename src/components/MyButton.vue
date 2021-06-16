@@ -1,7 +1,7 @@
 <template>
   <button
-    class="my-button"
     :class="[
+      'my-button',
       type,
       { 'border': borderStyle },
       pos ? `pos-${pos}` : '',
@@ -23,18 +23,12 @@ export default {
       type: String,
       required: true,
     },
-    borderStyle: {
-      type: Boolean,
-      required: false,
-    },
-    pos: {
-      type: String,
-      required: false,
-    },
     method: {
       type: Function,
       required: true,
     },
+    borderStyle: Boolean,
+    pos: String,
   },
-}
+};
 </script>
