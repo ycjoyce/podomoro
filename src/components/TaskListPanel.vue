@@ -3,19 +3,27 @@
 		<h2 class="title-primary">
 			TASK LIST
 		</h2>
-		
-		<TagList
-			:data="tagListData"
-		/>
+
+		<TagList :data="tagListData">
+			<template v-slot:default="slotProp">
+				<TodoTag
+					class="content-list todo"
+					v-if="slotProp.content.list.length > 0"
+					:data="slotProp.content"
+				/>
+			</template>
+		</TagList>
 	</div>
 </template>
 
 <script>
 import TagList from '@/components/TagList';
+import TodoTag from '@/components/TodoTag';
 
 export default {
   components: {
-    TagList,
+		TagList,
+		TodoTag,
   }, 
   computed: {
     tagListData() {

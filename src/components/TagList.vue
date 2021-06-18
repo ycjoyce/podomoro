@@ -15,39 +15,22 @@
 		</ul>
 
     <div class="tags-panel">
-      <TodoTag
-        class="content-list todo"
-        v-if="data.type === 'todoList' && getTagData(curTag).list.length > 0"
-        :data="getTagData(curTag)"
-      />
-
-      <RingtoneTag
-        class="content-list ringtone"
-        v-else-if="data.type === 'ringtoneList' && getTagData(curTag).list.length > 0"
-        :data="getTagData(curTag)"
-      />
-
-      <p
-				v-else
-				class="tags-panel-empty"
-			>
-				You don't have any {{itemName}} now,
-				<br>
-				please add {{itemName}} first!
-			</p>
+      <slot :content="getTagData(curTag)">
+        <p
+          class="tags-panel-empty"
+        >
+          You don't have any {{itemName}} now,
+          <br>
+          please add {{itemName}} first!
+        </p>
+      </slot>
     </div>
   </div>
 </template>
 
 <script>
-import TodoTag from '@/components/TodoTag';
-import RingtoneTag from '@/components/RingtoneTag';
 
 export default {
-  components: {
-    TodoTag,
-    RingtoneTag,
-  }, 
   props: {
     data: {
       type: Object,
